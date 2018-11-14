@@ -8,6 +8,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { MainComponent } from './main/main.component';
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { environment } from '../environments/environment';
+
 const appRoutes: Routes = [
   {
     path: 'home',
@@ -35,13 +40,21 @@ const appRoutes: Routes = [
   },
 ];
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NavbarComponent, FavouritesComponent, MainComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavbarComponent,
+    FavouritesComponent,
+    MainComponent,
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     ),
+    AngularFireModule.initializeApp(environment.firebase, 'listen-and-lyrics'),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
