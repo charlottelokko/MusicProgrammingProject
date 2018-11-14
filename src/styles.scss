@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'styles-variables';
+@import "node_modules/bootstrap/scss/bootstrap";
+navbar {
+  nav {
+    width: 100%;
+  }
+
+  @media (min-width: map-get($grid-breakpoints, sm)) {
+    nav {
+      width: 80%;
+    }
+  }
+}
