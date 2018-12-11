@@ -1,15 +1,34 @@
 import { Component, OnInit } from '@angular/core';
+// import { SpotifyService } from '../services/spotify.services'; // changed this due to the file name change
+import { SpotifyService } from '../services/spotify.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
+  providers: [SpotifyService],
 })
 export class NavbarComponent implements OnInit {
+  searchStr: string;
 
-  constructor() { }
+  constructor(private _spotifyService: SpotifyService) {
+    $(document).ready(() => {
+      $('.dropdown').keyup(function (event) {
+        // preventing default behaviour of bootstrap
+         event.stopPropagation();
+         $('.dropdown-menu').dropdown().toggle();
+     });
+    });
+   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  searchMusic() {
+    console.log(this.searchStr);
+    this._spotifyService.searchMusic(this.searchStr).subscribe(res => {
+      // this gets the data instead using .json()
+      console.log(res.tracks.items);
+    });
   }
-
 }
