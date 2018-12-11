@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 // import { SpotifyService } from '../services/spotify.services'; // changed this due to the file name change
 import { SpotifyService } from '../services/spotify.service';
 import * as $ from 'jquery';
-
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -17,7 +16,7 @@ export class NavbarComponent implements OnInit {
       $('.dropdown').keyup(function (event) {
         // preventing default behaviour of bootstrap
          event.stopPropagation();
-         $('.dropdown-menu').dropdown().toggle();
+         ($('.dropdown-menu') as any).dropdown().toggle();
      });
     });
    }
