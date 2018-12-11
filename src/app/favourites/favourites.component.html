@@ -1,3 +1,83 @@
-<p>
-  favourites works!
-</p>
+<div class="container-fluid row no-gutters">
+  <div class="col-md-8">
+    <div class="row no-gutters">
+      <div
+        [id]="track.id"
+        class="card col-md-12"
+        *ngFor="let track of favouriteTracks"
+      >
+        <div class="row no-gutters">
+          <div class="image-block col-md-4">
+            <img [src]="track.image_url" class="w-100" />
+          </div>
+          <div class="card-block col-md-6">
+            <div class="row">
+              <div class="track_info1 col-md-8 no-gutters">
+                <div>
+                  <p class="card-text">
+                    <span><b>Title:</b> {{ track.title }}</span>
+                  </p>
+                  <p class="card-text">
+                    <span><b>Artist:</b> {{ track.artist }}</span>
+                  </p>
+                  <p class="card-text">
+                    <span><b>Album Name:</b> {{ track.album_name }} </span>
+                  </p>
+                  <p class="card-text">
+                    <span><b>Released:</b> {{ track.released }}</span>
+                  </p>
+                  <p class="card-text">
+                    <span><b>Genre:</b> {{ track.genre }}</span>
+                  </p>
+                </div>
+              </div>
+              <div class="track_info2 col-md-4">
+                <div>
+                  <p class="card-text">Play Count: {{ track.play_count }}</p>
+                  <p class="card-text">Length: {{ track.duration }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="side-block col-md-2">
+            <div>
+              <div class="share-block row no-gutters">
+                <p><fa-icon [icon]="['fas', 'share']" size="2x"></fa-icon></p>
+                <p><b>Share</b></p>
+              </div>
+              <div class="favourite-block row no-gutters">
+                <p>
+                  <fa-icon
+                    [icon]="[track.favourite ? 'fas' : 'far', 'heart']"
+                    size="2x"
+                  ></fa-icon>
+                </p>
+                <p><b>Favourite</b></p>
+              </div>
+              <div class="rating-block row no-gutters">
+                <p><b>Rating</b></p>
+                <div
+                  [attr.data-value]="(track.rating / 5) * 100"
+                  data-type="fill"
+                  data-fill-dir="ltr"
+                  data-img="../../assets/img/5-star-rating.svg"
+                  data-fill-background="#000"
+                  data-fill="data:ldbar/res,bubble(#248,#fff,50,1)"
+                  class="ldBar auto"
+                >
+                  <div class="ldBar-label"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card col-md-3">
+    <hr />
+    <h2><b>Suggestions</b></h2>
+    <hr />
+    <div class="row no-gutters">test</div>
+  </div>
+</div>

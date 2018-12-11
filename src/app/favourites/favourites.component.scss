@@ -1,0 +1,121 @@
+@import "../../assets/css/loading-bar.css";
+.no-gutters {
+  margin-left: 0;
+  margin-right: 0;
+}
+.container-fluid {
+  padding: 20px;
+  & > .col-md-8 {
+    margin-right: 20px;
+    padding: 0;
+    .card.col-md-12 {
+      padding: 0;
+      margin-bottom: 15px;
+      .image-block.col-md-4 {
+        padding: 0;
+      }
+      .card-block.col-md-6 {
+        padding: 10px 0;
+        & > .row {
+          margin: 0 10px;
+          height: 100%;
+          border: medium solid black;
+          .track_info1 {
+            padding: 10px;
+            height: 100%;
+            border-right: thin solid black;
+            div {
+              height: 100%;
+              display: table;
+              table-layout: fixed;
+              position: relative;
+              top: 50%;
+              -webkit-transform: translateY(-50%);
+              -ms-transform: translateY(-50%);
+              transform: translateY(-50%);
+              p {
+                display: table-row;
+                font-size: 1.25vw;
+                span {
+                  display: table-cell;
+                  vertical-align: middle;
+                }
+              }
+            }
+          }
+          .track_info2 {
+            padding: 10px;
+            height: 100%;
+            div {
+              text-align: center;
+              position: relative;
+              top: 50%;
+              -webkit-transform: translateY(-50%);
+              -ms-transform: translateY(-50%);
+              transform: translateY(-50%);
+              p {
+                font-size: 1.25vw;
+              }
+            }
+          }
+        }
+      }
+      .side-block.col-md-2 {
+        padding: 10px 10px 10px 0;
+        div {
+          // text-align: center;
+          position: relative;
+          top: 50%;
+          -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+          .share-block {
+            & > p {
+              &:first-child {
+                margin: 0;
+              }
+              width: 100%;
+              text-align: center;
+              color: black;
+            }
+          }
+          .favourite-block {
+            & > p {
+              &:first-child {
+                margin: 0;
+              }
+              width: 100%;
+              text-align: center;
+              color: black;
+            }
+          }
+          .rating-block {
+            border-top: medium solid black;
+            & > p {
+              width: 100%;
+              text-align: center;
+              color: black;
+            }
+            .ldBar {
+              width: 100% !important;
+              height: auto !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .col-md-3 {
+    margin: 0 auto;
+    padding: 0 20px;
+    h2 {
+      text-align: center;
+    }
+    & > .row {
+      border: medium solid black;
+      height: 100%;
+      margin-bottom: 20px;
+      padding: 15px;
+    }
+  }
+}

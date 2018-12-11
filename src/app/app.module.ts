@@ -14,6 +14,12 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { environment } from '../environments/environment';
 
+// Import for FontAwesome (icons galore)
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 // Import for reponsive bootstrp layout.
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -56,6 +62,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FontAwesomeModule,
     MatToolbarModule,
     MatCardModule,
     RouterModule.forRoot(
@@ -68,4 +75,9 @@ const appRoutes: Routes = [
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    // Add an icon to the library for convenient access in other components
+    library.add(fab, fas, far);
+  }
+}
