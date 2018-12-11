@@ -10,16 +10,16 @@ import { SpotifyService } from '../services/spotify.services';
 export class NavbarComponent implements OnInit {
   searchStr: string;
 
-  constructor(private _sportifyService: SpotifyService) { }
+  constructor(private _spotifyService: SpotifyService) { }
 
   ngOnInit() {
   }
 
   searchMusic() {
     console.log(this.searchStr);
-    this._sportifyService.searchMusic(this.searchStr)
+    this._spotifyService.searchMusic(this.searchStr)
         .subscribe(res => {
-          console.log(res.track.items);
+          console.log(res['track.items']);
         });
   }
 
