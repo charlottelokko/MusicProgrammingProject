@@ -5,7 +5,7 @@ import {
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
 // import ldBar from '@loadingio/loading-bar';
-import $ from 'jquery';
+import * as $ from 'jquery';
 interface Track {
   id: string;
   title: string;
