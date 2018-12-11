@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { SpotifyService } from '../services/spotify.services'; // changed this due to the file name change
 import { SpotifyService } from '../services/spotify.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,15 @@ import { SpotifyService } from '../services/spotify.service';
 export class NavbarComponent implements OnInit {
   searchStr: string;
 
-  constructor(private _spotifyService: SpotifyService) { }
+  constructor(private _spotifyService: SpotifyService) {
+    $(document).ready(() => {
+      $('.dropdown').keyup(function (event) {
+        // preventing default behaviour of bootstrap
+         event.stopPropagation();
+         $('.dropdown-menu').dropdown().toggle();
+     });
+    });
+   }
 
   ngOnInit() {}
 
@@ -19,7 +28,7 @@ export class NavbarComponent implements OnInit {
     console.log(this.searchStr);
     this._spotifyService.searchMusic(this.searchStr).subscribe(res => {
       // this gets the data instead using .json()
-      console.log(res['tracks.items']);
+      console.log(res.tracks.items);
     });
   }
 }

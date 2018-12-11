@@ -14,7 +14,8 @@ export interface SpotifyObject {
 })
 export class SpotifyService {
   private searchUrl: string;
-  private access_token = 'insert spotify access token here';
+  // tslint:disable-next-line:max-line-length
+  private access_token = 'BQDxwYRviWmIUPgCfngjG0TK1wKgzLvemtwLMUk45WUixEcnyE-xgKFAY5bHiYeDn2cn9R0-XJq2lBfnOkaiiz0scqOBb-TWBFfZ5LpIlPlU1dJRUsH1SCyOo5AnP9id0t5Yfa4qLPt9KjepC3ua2nDlgTib8FPP-CPL';
 
   constructor(private _http: HttpClient) {}
 
@@ -27,8 +28,7 @@ export class SpotifyService {
       'https://api.spotify.com/v1/search?query=' +
       str +
       '&offset=0&limit=30&type=' +
-      type +
-      '&market=UK';
+      type;
     // because of this changes to map .json() doesn't exist anymore
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
