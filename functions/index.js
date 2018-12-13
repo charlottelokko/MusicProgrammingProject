@@ -23,6 +23,7 @@ const promisePool = require('es6-promise-pool');
 const PromisePool = promisePool.PromisePool;
 const secureCompare = require('secure-compare');
 const APP_NAME = 'Cloud Storage for Listen & Lyrics Firebase';
+const db = admin.firestore(); // get firestore database
 
 exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
   const key = req.query.key;
@@ -47,9 +48,10 @@ exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
     return null;
   }
   console.log('Got past key checker');
-
-  var client_id = '897e1a100d934e0a8afcfccd94e42dcb'; // Your client id
-  var client_secret = 'ae5771e37e354f20be06d1417beb25d3'; // Your secret
+  // Made these envioronment variables using `firebase functions:config:set <name> = <value>` in terminal
+  // Use `firebase functions:config:get` to see the environment variables
+  var client_id = functions.config().client.id; // Your client id
+  var client_secret = functions.config().client.secret; // Your secret
 
   // your application requests authorization
   var authOptions = {
@@ -70,9 +72,14 @@ exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
     if (!error && response.statusCode === 200) {
       // use the access token to access the Spotify Web API
       var token = body.access_token;
+      // Set the 'capital' field of the city
+      var updateSingle = db
+        .collection('SecretAccountData')
+        .doc('SAD')
+        .update({ access_token: token });
       console.log('I GOT THE TOKEN: ' + token);
       var options = {
-        url: 'https://api.spotify.com/v1/users/11991758880',
+        url: 'https://api.spotify.com/v1/users/littlelokko',
         headers: {
           Authorization: 'Bearer ' + token,
         },
@@ -82,10 +89,11 @@ exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
         console.log(body);
         return body;
       });
+    } else {
+      console.log(error);
+      console.log('Status Code: ' + response.statusCode);
+      console.log('Body: ' + JSON.stringify(body));
     }
-    console.log(error);
-    console.log('Status Code: ' + response);
-    console.log('Body: ' + body);
     return null;
   });
   return 'refreshspotifyaccesstoken triggered!';
