@@ -25,9 +25,16 @@ export class NavbarComponent implements OnInit {
 
   searchMusic() {
     console.log(this.searchStr);
-    this._spotifyService.searchMusic(this.searchStr).subscribe(res => {
-      // this gets the data instead using .json()
-      console.log((res as any).tracks.items);
-    });
+    if (this.searchStr !== '') {
+      this._spotifyService.searchMusic(this.searchStr).subscribe(
+        res => {
+          // this gets the data instead using .json()
+          console.log((res as any).tracks.items);
+        },
+        err => {
+          console.log('Error:' + err);
+        }
+      );
+    }
   }
 }
