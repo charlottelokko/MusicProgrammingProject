@@ -18,6 +18,7 @@
 //     client_secret = '[ae5771e37e354f20be06d1417beb25d3]';
 
 //     // tslint:disable-next-line:max-line-length
+// tslint:disable-next-line:max-line-length
 //     private access_token = 'BQDxwYRviWmIUPgCfngjG0TK1wKgzLvemtwLMUk45WUixEcnyE-xgKFAY5bHiYeDn2cn9R0-XJq2lBfnOkaiiz0scqOBb-TWBFfZ5LpIlPlU1dJRUsH1SCyOo5AnP9id0t5Yfa4qLPt9KjepC3ua2nDlgTib8FPP-CPL';
 //     private tokenType: 'bearer';
 
