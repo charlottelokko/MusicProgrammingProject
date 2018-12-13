@@ -3,5 +3,8 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
+    match /SecretAccountData/SAD {
+      allow read;
+    }
   }
 }
