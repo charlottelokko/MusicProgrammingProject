@@ -13,13 +13,13 @@ export class NavbarComponent implements OnInit {
 
   constructor(private _spotifyService: SpotifyService) {
     $(document).ready(() => {
-      $('.dropdown').keyup(function (event) {
+      $('.dropdown').keyup(function(event) {
         // preventing default behaviour of bootstrap
-         event.stopPropagation();
-         ($('.dropdown-menu') as any).dropdown().toggle();
-     });
+        event.stopPropagation();
+        ($('.dropdown-menu') as any).dropdown().toggle();
+      });
     });
-   }
+  }
 
   ngOnInit() {}
 
@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
     console.log(this.searchStr);
     this._spotifyService.searchMusic(this.searchStr).subscribe(res => {
       // this gets the data instead using .json()
-      console.log(res.tracks.items);
+      console.log((res as any).tracks.items);
     });
   }
 }

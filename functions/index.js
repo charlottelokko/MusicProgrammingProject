@@ -1,8 +1,92 @@
-const functions = require('firebase-functions');
+/**
+ * Copyright 2015 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+'use strict';
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+const request = require('request'); // "Request" library
+admin.initializeApp();
+const promisePool = require('es6-promise-pool');
+const PromisePool = promisePool.PromisePool;
+const secureCompare = require('secure-compare');
+const APP_NAME = 'Cloud Storage for Listen & Lyrics Firebase';
+
+exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
+  const key = req.query.key;
+  console.log('Got into Cloud Function with Key: ' + key);
+  console.log(
+    'The results are in: ' + secureCompare(key, functions.config().cron.key)
+  );
+  // Exit if the keys don't match.
+  if (!secureCompare(key, functions.config().cron.key)) {
+    console.log(
+      'The key provided in the request does not match the key set in the environment. Check that',
+      key,
+      'matches the cron.key attribute in `firebase env:get`'
+    );
+    res
+      .status(403)
+      .send(
+        'Security key does not match. Make sure your "key" URL query parameter matches the ' +
+          'cron.key environment variable. Cause yours was ' +
+          key
+      );
+    return null;
+  }
+  console.log('Got past key checker');
+
+  var client_id = '897e1a100d934e0a8afcfccd94e42dcb'; // Your client id
+  var client_secret = 'ae5771e37e354f20be06d1417beb25d3'; // Your secret
+
+  // your application requests authorization
+  var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      Authorization:
+        'Basic ' +
+        new Buffer(client_id + ':' + client_secret).toString('base64'),
+    },
+    form: {
+      grant_type: 'client_credentials',
+    },
+    json: true,
+  };
+
+  request.post(authOptions, (error, response, body) => {
+    console.log('Posting request...');
+    if (!error && response.statusCode === 200) {
+      // use the access token to access the Spotify Web API
+      var token = body.access_token;
+      console.log('I GOT THE TOKEN: ' + token);
+      var options = {
+        url: 'https://api.spotify.com/v1/users/11991758880',
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+        json: true,
+      };
+      request.get(options, (error, response, body) => {
+        console.log(body);
+        return body;
+      });
+    }
+    console.log(error);
+    console.log('Status Code: ' + response);
+    console.log('Body: ' + body);
+    return null;
+  });
+  return 'refreshspotifyaccesstoken triggered!';
+});
