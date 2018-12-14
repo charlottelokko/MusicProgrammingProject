@@ -1,20 +1,2 @@
-/* You can add global styles to this file, and also import other style files 
-@import 'styles-variables';
-@import "node_modules/bootstrap/scss/bootstrap";
-@import '~bootstrap/scss/bootstrap-reboot';
-@import '~bootstrap/scss/bootstrap-grid';
-navbar {
-  nav {
-    width: 100%;
-  }
-
-  @media (min-width: map-get($grid-breakpoints, sm)) {
-    nav {
-      width: 80%;
-    }
-  }
-}
-
-*/
-
-@import url("https://bootswatch.com/4/superhero/bootstrap.min.css")
+/* You can add global styles to this file, and also import other style files*/
+@import url("https://bootswatch.com/4/superhero/bootstrap.min.css");

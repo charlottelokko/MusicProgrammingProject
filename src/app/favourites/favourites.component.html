@@ -1,3 +1,108 @@
-<p>
-  favourites works!
-</p>
+<div class="container-fluid row no-gutters">
+  <div class="col-md-8">
+    <div class="row no-gutters">
+      <div
+        [id]="track.id"
+        class="card col-md-12"
+        *ngFor="let track of favouriteTracks"
+      >
+        <div class="row no-gutters">
+          <div class="image-block col-md-4">
+            <img [src]="track.image_url" class="w-100" />
+          </div>
+          <div class="card-block col-md-6">
+            <div class="row">
+              <div class="track_info1 col-md-8 no-gutters">
+                <div>
+                  <p class="card-text">
+                    <span><b>Title:</b> {{ track.title }}</span>
+                  </p>
+                  <p class="card-text">
+                    <span><b>Artist:</b> {{ track.artist }}</span>
+                  </p>
+                  <p class="card-text">
+                    <span><b>Album Name:</b> {{ track.album_name }} </span>
+                  </p>
+                  <p class="card-text">
+                    <span><b>Released:</b> {{ track.released }}</span>
+                  </p>
+                  <p class="card-text">
+                    <span><b>Genre:</b> {{ track.genre }}</span>
+                  </p>
+                </div>
+              </div>
+              <div class="track_info2 col-md-4">
+                <div>
+                  <p class="card-text">Play Count: {{ track.play_count }}</p>
+                  <p class="card-text">Length: {{ track.duration }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="side-block col-md-2">
+            <div>
+              <div class="favourite-block row no-gutters">
+                <p>
+                  <mat-icon>{{
+                    track.favourite ? 'favorite' : 'favorite_border'
+                  }}</mat-icon>
+                </p>
+                <p><b>Favourite</b></p>
+              </div>
+              <div class="rating-block row no-gutters">
+                <p><b>Rating</b></p>
+
+                <div class="rating-stars">
+                  <mat-icon
+                    [id]="'star-' + track.id + '-1'"
+                    [ngClass]="{ rated: track.rating >= 1 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 1 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                  <mat-icon
+                    [id]="'star-' + track.id + '-2'"
+                    [ngClass]="{ rated: track.rating >= 2 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 2 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                  <mat-icon
+                    [id]="'star-' + track.id + '-3'"
+                    [ngClass]="{ rated: track.rating >= 3 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 3 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                  <mat-icon
+                    [id]="'star-' + track.id + '-4'"
+                    [ngClass]="{ rated: track.rating >= 4 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 4 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                  <mat-icon
+                    [id]="'star-' + track.id + '-5'"
+                    [ngClass]="{ rated: track.rating >= 5 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 5 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card col-md-3">
+    <h2><b>Suggestions</b></h2>
+    <div class="row no-gutters">test</div>
+  </div>
+</div>
