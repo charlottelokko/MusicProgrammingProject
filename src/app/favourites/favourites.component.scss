@@ -61,14 +61,12 @@
       }
       .side-block.col-md-2 {
         padding: 10px 10px 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         div {
-          // text-align: center;
-          position: relative;
-          top: 50%;
-          -webkit-transform: translateY(-50%);
-          -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
-          .share-block {
+          text-align: center;
+          & > div {
             & > p {
               &:first-child {
                 margin: 0;
@@ -77,27 +75,36 @@
               text-align: center;
               color: black;
             }
-          }
-          .favourite-block {
-            & > p {
-              &:first-child {
-                margin: 0;
+            font-size: 1.5vw;
+            &.favourite-block {
+              & > p {
+                mat-icon {
+                  color: red;
+                  font-size: 1.75vw;
+                  &:hover {
+                    color: white;
+                  }
+                }
               }
-              width: 100%;
-              text-align: center;
-              color: black;
             }
-          }
-          .rating-block {
-            border-top: medium solid black;
-            & > p {
-              width: 100%;
-              text-align: center;
-              color: black;
-            }
-            .ldBar {
-              width: 100% !important;
-              height: auto !important;
+            &.rating-block {
+              border-top: medium solid black;
+
+              .rating-stars {
+                mat-icon {
+                  font-size: 1.25vw;
+                  &.hover {
+                    color: white !important;
+                  }
+                  &.rated {
+                    color: yellow;
+                  }
+                }
+                width: 100%;
+                height: auto;
+                color: black;
+                text-align: center;
+              }
             }
           }
         }
@@ -106,8 +113,11 @@
   }
   .col-md-3 {
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 10px 20px;
     h2 {
+      padding: 10px 0;
+      border-top: thin solid white;
+      border-bottom: thin solid white;
       text-align: center;
     }
     & > .row {
