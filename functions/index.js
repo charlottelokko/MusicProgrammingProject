@@ -18,12 +18,11 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const request = require('request'); // "Request" library
-admin.initializeApp();
-const promisePool = require('es6-promise-pool');
-const PromisePool = promisePool.PromisePool;
 const secureCompare = require('secure-compare');
-const APP_NAME = 'Cloud Storage for Listen & Lyrics Firebase';
+admin.initializeApp();
 const db = admin.firestore(); // get firestore database
+const settings = { /* your settings... */ timestampsInSnapshots: true };
+db.settings(settings);
 
 exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
   const key = req.query.key;

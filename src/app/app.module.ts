@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { MainComponent } from './main/main.component';
+import {CoreModule} from './core/core.module';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -21,13 +22,18 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+
 
 // Import for reponsive bootstrp layout.
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
+// Import for Angular Material Icons
+import { MatIconModule } from '@angular/material';
 const appRoutes: Routes = [
   {
     path: 'home',
@@ -61,6 +67,7 @@ const appRoutes: Routes = [
     NavbarComponent,
     FavouritesComponent,
     MainComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +76,8 @@ const appRoutes: Routes = [
     FontAwesomeModule,
     MatToolbarModule,
     MatCardModule,
+    CoreModule,
+    MatIconModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(

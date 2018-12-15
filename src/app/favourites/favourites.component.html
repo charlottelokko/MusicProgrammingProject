@@ -41,31 +41,58 @@
           </div>
           <div class="side-block col-md-2">
             <div>
-              <div class="share-block row no-gutters">
-                <p><fa-icon [icon]="['fas', 'share']" size="2x"></fa-icon></p>
-                <p><b>Share</b></p>
-              </div>
               <div class="favourite-block row no-gutters">
                 <p>
-                  <fa-icon
-                    [icon]="[track.favourite ? 'fas' : 'far', 'heart']"
-                    size="2x"
-                  ></fa-icon>
+                  <mat-icon>{{
+                    track.favourite ? 'favorite' : 'favorite_border'
+                  }}</mat-icon>
                 </p>
                 <p><b>Favourite</b></p>
               </div>
               <div class="rating-block row no-gutters">
                 <p><b>Rating</b></p>
-                <div
-                  [attr.data-value]="(track.rating / 5) * 100"
-                  data-type="fill"
-                  data-fill-dir="ltr"
-                  data-img="../../assets/img/5-star-rating.svg"
-                  data-fill-background="#000"
-                  data-fill="data:ldbar/res,bubble(#248,#fff,50,1)"
-                  class="ldBar auto"
-                >
-                  <div class="ldBar-label"></div>
+
+                <div class="rating-stars">
+                  <mat-icon
+                    [id]="'star-' + track.id + '-1'"
+                    [ngClass]="{ rated: track.rating >= 1 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 1 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                  <mat-icon
+                    [id]="'star-' + track.id + '-2'"
+                    [ngClass]="{ rated: track.rating >= 2 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 2 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                  <mat-icon
+                    [id]="'star-' + track.id + '-3'"
+                    [ngClass]="{ rated: track.rating >= 3 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 3 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                  <mat-icon
+                    [id]="'star-' + track.id + '-4'"
+                    [ngClass]="{ rated: track.rating >= 4 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 4 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
+                  <mat-icon
+                    [id]="'star-' + track.id + '-5'"
+                    [ngClass]="{ rated: track.rating >= 5 }"
+                    (click)="this.updateRating($event)"
+                    >{{
+                      this.setRating(track.id) >= 5 ? 'star' : 'star_border'
+                    }}
+                  </mat-icon>
                 </div>
               </div>
             </div>
@@ -75,9 +102,7 @@
     </div>
   </div>
   <div class="card col-md-3">
-    <hr />
     <h2><b>Suggestions</b></h2>
-    <hr />
     <div class="row no-gutters">test</div>
   </div>
 </div>
