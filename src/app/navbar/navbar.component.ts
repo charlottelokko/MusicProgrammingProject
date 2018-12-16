@@ -8,7 +8,6 @@ import * as $ from 'jquery';
   styleUrls: ['./navbar.component.scss'],
   providers: [SpotifyService],
 })
-
 export class NavbarComponent implements OnInit {
   searchStr: string;
 
@@ -39,6 +38,3 @@ export class NavbarComponent implements OnInit {
     }
   }
 }
- 
-  
-

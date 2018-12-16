@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+('use strict');
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
@@ -49,18 +49,16 @@ exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
   console.log('Got past key checker');
   // Made these envioronment variables using `firebase functions:config:set <name> = <value>` in terminal
   // Use `firebase functions:config:get` to see the environment variables
-  var spotify_client_id = functions.config().spotify.client_id; // Your client id
-  var spotify_client_secret = functions.config().spotify.client_secret; // Your secret
+  var client_id = functions.config().spotify.client_id; // Your client id
+  var client_secret = functions.config().spotify.client_secret; // Your secret
 
   // your application requests authorization
-  var spotifyAuthOptions = {
+  var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     headers: {
       Authorization:
         'Basic ' +
-        new Buffer(spotify_client_id + ':' + spotify_client_secret).toString(
-          'base64'
-        ),
+        new Buffer(client_id + ':' + client_secret).toString('base64'),
     },
     form: {
       grant_type: 'client_credentials',
@@ -68,8 +66,8 @@ exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
     json: true,
   };
 
-  request.post(spotifyAuthOptions, (error, response, body) => {
-    console.log('Posting request to Spotify...');
+  request.post(authOptions, (error, response, body) => {
+    console.log('Posting request...');
     if (!error && response.statusCode === 200) {
       // use the access token to access the Spotify Web API
       var token = body.access_token;
@@ -78,13 +76,24 @@ exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
         .collection('SecretAccountData')
         .doc('SAD')
         .update({ access_token: token });
-      // .update({ access_token.spotify: token });
       console.log('I GOT THE TOKEN: ' + token);
+      var options = {
+        url: 'https://api.spotify.com/v1/users/littlelokko',
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+        json: true,
+      };
+      request.get(options, (error, response, body) => {
+        console.log(body);
+        return body;
+      });
     } else {
+      console.log(error);
       console.log('Status Code: ' + response.statusCode);
       console.log('Body: ' + JSON.stringify(body));
     }
     return null;
   });
-  return res.send('Spotify Token Gotten!');
+  return 'refreshspotifyaccesstoken triggered!';
 });
