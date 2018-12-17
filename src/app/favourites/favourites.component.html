@@ -6,7 +6,7 @@
         class="card col-md-12"
         *ngFor="let track of favouriteTracks"
       >
-        <div class="row no-gutters">
+        <div class="row no-gutters" *ngIf="track.favourites.favourited == true">
           <div class="image-block col-md-4">
             <img [src]="track.image_url" class="w-100" />
           </div>
@@ -106,16 +106,17 @@
   <div class="card col-md-3">
     <h2><b>Suggestions</b></h2>
     <div class="row no-gutters">
-      <input
-        type="text"
-        name="searchStr"
-        [(ngModel)]="searchStr"
-        (keyup)="searchLyrics()"
-        data-toggle="dropdown"
-        class="mr-sm-2 form-control"
-        placeholder="Search Tracks..."
-      />
+      <form>
+        <input
+          type="text"
+          name="searchStr"
+          [(ngModel)]="searchStr"
+          (keyup)="searchLyrics()"
+          class="mr-sm-2 form-control"
+          placeholder="Search Tracks..."
+        />
+      </form>
+      <div id="lyrics" class="primary row no-gutters"></div>
     </div>
-    <div id="lyrics" class="primary row no-gutters"></div>
   </div>
 </div>
