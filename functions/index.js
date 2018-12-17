@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+('use strict');
 
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
@@ -49,8 +49,8 @@ exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
   console.log('Got past key checker');
   // Made these envioronment variables using `firebase functions:config:set <name> = <value>` in terminal
   // Use `firebase functions:config:get` to see the environment variables
-  var client_id = functions.config().client.id; // Your client id
-  var client_secret = functions.config().client.secret; // Your secret
+  var client_id = functions.config().spotify.client_id; // Your client id
+  var client_secret = functions.config().spotify.client_secret; // Your secret
 
   // your application requests authorization
   var authOptions = {
