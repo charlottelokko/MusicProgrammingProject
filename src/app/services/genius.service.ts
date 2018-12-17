@@ -85,7 +85,7 @@ export class GeniusService {
     // removing extra stuff
     lyric = lyric.replace(/<a/g, '<p');
     lyric = lyric.replace(/<\/a>/g, '</p>');
-    console.log(lyric);
+    // console.log(lyric);
     return lyric;
   }
 }
