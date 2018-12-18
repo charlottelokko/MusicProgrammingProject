@@ -23,10 +23,11 @@ export class MainComponent implements OnInit {
     private afs: AngularFirestore,
     private route: ActivatedRoute
   ) {
+    
     $(document).ready(() => {
       this.auth.user.subscribe(_user => {
         console.log(_user);
-        this.userRef = this.afs.doc(`users/${_user.uid}`).valueChanges();
+       // this.userRef = this.afs.doc(`users/${_user.uid}`).valueChanges();
         this.user = _user;
       });
     });
@@ -43,9 +44,9 @@ export class MainComponent implements OnInit {
   }
   ngOnInit() {
     // Makes songID = the hash of the URL e.g #123 = 123
-    this.route.fragment.subscribe(fragment => {
-      this.songID = fragment;
-      console.log('SongID: ' + this.songID);
-    });
+    // this.route.fragment.subscribe(fragment => {
+    //   this.songID = fragment;
+    //   console.log('SongID: ' + this.songID);
+    // });
   }
 }
