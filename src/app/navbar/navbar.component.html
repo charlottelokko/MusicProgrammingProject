@@ -35,7 +35,7 @@
       <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#exampleModal">Log In</a></li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
- <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchMusic()" data-toggle="dropdown" class="form-control mr-sm-2"  placeholder="Search Tracks..." />      <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+ <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup)="searchLyrics()" (keyup) = "searchMusic()" data-toggle="dropdown" class="form-control mr-sm-2"  placeholder="Search Tracks..." />      <button class="btn btn-secondary my-2 my-sm-0" type="submit">
         Search
       </button>
     </form>
@@ -46,7 +46,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

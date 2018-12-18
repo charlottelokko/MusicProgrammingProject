@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { SpotifyService } from '../services/spotify.services'; // changed this due to the file name change
 import { SpotifyService } from '../services/spotify.service';
 import * as $ from 'jquery';
+import { GeniusService } from '../services/genius.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -11,7 +12,7 @@ import * as $ from 'jquery';
 export class NavbarComponent implements OnInit {
   searchStr: string;
 
-  constructor(private _spotifyService: SpotifyService) {
+  constructor(private _spotifyService: SpotifyService, private _geniusService: GeniusService) {
     $(document).ready(() => {
       $('.dropdown').keyup(function(event) {
         // preventing default behaviour of bootstrap
@@ -35,6 +36,12 @@ export class NavbarComponent implements OnInit {
           console.log('Error:' + err);
         }
       );
+    }
+  }
+  searchLyrics(searchtr) {
+    console.log(this.searchStr);
+    if (this.searchStr !== '') {
+      this._geniusService.searchLyrics(this.searchStr);
     }
   }
 }
