@@ -144,7 +144,10 @@ export class FavouritesComponent implements OnInit {
   setFavourited(id) {
     const track_id = id;
     const index = this.favouriteTracks.findIndex(obj => obj.id === track_id);
-    return this.favouriteTracks[index].favourites.rating;
+    const favourited = this.favouriteTracks[index].favourites.favourited;
+    this.favouriteTracks[index].favourites.favourited = favourited
+      ? false
+      : true;
   }
   searchLyrics(searchtr) {
     console.log(this.searchStr);
