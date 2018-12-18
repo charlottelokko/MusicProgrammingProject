@@ -56,4 +56,14 @@ export class SpotifyService {
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
   }
+  getTrackObject(id) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + this.access_token
+    );
+    this.searchUrl = 'https://api.spotify.com/v1/tracks/' + id;
+    // because of this changes to map .json() doesn't exist anymore
+    // return this._http.get(this.searchUrl).map(res => res.json());
+    return this._http.get(this.searchUrl, { headers: headers });
+  }
 }
