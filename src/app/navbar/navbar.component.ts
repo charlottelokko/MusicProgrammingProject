@@ -66,8 +66,8 @@ export class NavbarComponent implements OnInit {
             // atag.appendChild(trackList);
             // atag.appendChild(artistList);
             atag.innerHTML = (track + ' : ' + artists);
-            atag.setAttribute("href", "main#" +  trackId);
-            atag.setAttribute("href", "main#" +  trackId);
+            atag.setAttribute('href', 'main#' +  trackId);
+            atag.setAttribute('class', 'dropdown-item overflow');
 
             // divy.appendChild(atag);
 
@@ -81,6 +81,9 @@ export class NavbarComponent implements OnInit {
           console.log('Error:' + err);
         }
       );
+    } else {
+      const element = document.getElementById('drop');
+      element.innerHTML = ' ';
     }
   }
 }
