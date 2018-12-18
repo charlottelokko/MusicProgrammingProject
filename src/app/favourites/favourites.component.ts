@@ -6,24 +6,8 @@ import {
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
 import { GeniusService } from '../services/genius.service';
+import { PlayedTrack } from '../core/user-type';
 import * as $ from 'jquery';
-interface Favourites {
-  rating: number;
-  favourited: boolean;
-  play_count: number;
-}
-
-interface PlayedTrack {
-  id: string;
-  title: string;
-  artist: string;
-  album_name: string;
-  released: string;
-  genre: string;
-  duration: number;
-  favourites: Favourites;
-  image_url: string;
-}
 
 @Component({
   selector: 'app-favourites',

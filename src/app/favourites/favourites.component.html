@@ -5,8 +5,9 @@
         [id]="track.id"
         class="card col-md-12"
         *ngFor="let track of favouriteTracks"
+        [hidden]="!track.favourites.favourited"
       >
-        <div class="row no-gutters" *ngIf="track.favourites.favourited == true">
+        <div class="row no-gutters">
           <div class="image-block col-md-4">
             <img [src]="track.image_url" class="w-100" />
           </div>
