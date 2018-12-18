@@ -7,17 +7,10 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
+import { PlayedTrack, User, Favourites } from './user-type';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-
-interface User {
-  uid: string;
-  email: string;
-  photoURL?: string;
-  displayName?: string;
-  favourites?: Array<Object>;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -49,22 +42,25 @@ export class AuthService {
 
   private oAuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider).then(credential => {
-      this.updateUserData(credential.user);
+      // If its a new user
+      if (credential.additionalUserInfo.isNewUser) {
+        this.updateUserData(credential.user);
+      }
     });
   }
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-
+    console.log(userRef);
     const data: User = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
+      playedTracks: null,
     };
 
     return userRef.set(data, { merge: true });
