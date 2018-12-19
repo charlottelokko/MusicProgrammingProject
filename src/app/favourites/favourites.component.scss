@@ -7,116 +7,70 @@ mat-icon .material-icons {
 }
 .container-fluid {
   padding: 20px;
-  & > .col-md-8 {
-    margin-right: 20px;
-    padding: 0;
-    .card.col-md-12 {
-      padding: 0;
-      margin-bottom: 15px;
-      .image-block.col-md-4 {
+  .col-md-8 {
+    .card.border-primary {
+      margin: 1rem !important;
+      width: 20rem;
+      .card-header {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .card-body {
         padding: 0;
-      }
-      .card-block.col-md-6 {
-        padding: 10px 0;
-        & > .row {
-          margin: 0 10px;
+        height: 318px;
+        .track-info,
+        .user-info {
+          display: table;
+          table-layout: fixed;
+          position: relative;
+          top: 50%;
+          -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+          padding: 1.25rem;
+          width: 100%;
           height: 100%;
-          border: medium solid black;
-          .track_info1 {
-            padding: 10px;
-            height: 100%;
-            border-right: thin solid black;
-            div {
-              height: 100%;
-              display: table;
-              table-layout: fixed;
-              position: relative;
-              top: 50%;
-              -webkit-transform: translateY(-50%);
-              -ms-transform: translateY(-50%);
-              transform: translateY(-50%);
-              p {
-                display: table-row;
-                font-size: 1.25vw;
-                span {
-                  display: table-cell;
-                  vertical-align: middle;
-                }
-              }
-            }
-          }
-          .track_info2 {
-            padding: 10px;
-            height: 100%;
-            div {
-              text-align: center;
-              position: relative;
-              top: 50%;
-              -webkit-transform: translateY(-50%);
-              -ms-transform: translateY(-50%);
-              transform: translateY(-50%);
-              p {
-                font-size: 1.25vw;
-              }
-            }
-          }
-        }
-      }
-      .side-block.col-md-2 {
-        padding: 10px 10px 10px 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        div {
           text-align: center;
-          & > div {
-            & > p {
-              &:first-child {
-                margin: 0;
+          p {
+            text-align: center;
+            display: table-row;
+            span {
+              display: table-cell;
+              vertical-align: middle;
+            }
+          }
+          .favourite {
+            mat-icon {
+              color: red;
+            }
+          }
+          .rating {
+            margin-bottom: 0;
+            mat-icon {
+              &.hover {
+                color: white !important;
               }
+              &.rated {
+                color: yellow;
+              }
+            }
+            p {
               width: 100%;
               text-align: center;
-              color: black;
-            }
-            font-size: 1.5vw;
-            &.favourite-block {
-              & > p {
-                mat-icon {
-                  color: red;
-                  font-size: 1.75vw;
-                  &:hover {
-                    color: white;
-                  }
-                }
-              }
-            }
-            &.rating-block {
-              border-top: medium solid black;
-
-              .rating-stars {
-                mat-icon {
-                  font-size: 1.25vw;
-                  &.hover {
-                    color: white !important;
-                  }
-                  &.rated {
-                    color: yellow;
-                  }
-                }
-                width: 100%;
-                height: auto;
-                color: black;
-                text-align: center;
-              }
             }
           }
         }
+      }
+      label.btn.btn-primary {
+        width: 100%;
       }
     }
   }
-  .col-md-3 {
+
+  .col-md-4 {
     margin: 0 auto;
-    padding: 10px 20px;
+    padding: 10px 0;
     h2 {
       padding: 10px 0;
       border-top: thin solid white;

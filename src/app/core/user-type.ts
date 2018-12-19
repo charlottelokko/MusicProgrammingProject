@@ -7,13 +7,12 @@ export interface Favourites {
 export interface PlayedTrack {
   id: string;
   title?: string;
-  artist?: string;
+  artists?: Array<string>;
   album_name?: string;
   released?: string;
-  genre?: string;
   duration?: number;
   favourites: Favourites;
-  image_url?: string;
+  image_url?: Array<string>;
 }
 export interface User {
   uid: string;
