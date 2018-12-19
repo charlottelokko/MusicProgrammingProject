@@ -8,6 +8,7 @@ import {
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
+import { SpotifyService } from '../services/spotify.service';
 
 @Component({
   selector: 'app-main',
@@ -15,38 +16,55 @@ import { Observable } from 'rxjs';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  user: User;
-  userRef: Observable<any>;
-  songID: string = window.location.hash;
+  userData: any;
+  songId: string = window.location.hash;
   constructor(
     public auth: AuthService,
+    public _spotifyService: SpotifyService,
     private afs: AngularFirestore,
     private route: ActivatedRoute
   ) {
-    
-    $(document).ready(() => {
-      this.auth.user.subscribe(_user => {
-        console.log(_user);
-       // this.userRef = this.afs.doc(`users/${_user.uid}`).valueChanges();
-        this.user = _user;
-      });
-    });
-  }
-  toggleFavourited() {
-    this.userRef.subscribe(trackArray => {
-      trackArray.forEach(track => {
-        if (this.songID === track.id) {
-          console.log(track);
-          track.favourites = true;
+    auth.user.subscribe(_user => {
+      let trackExists = false;
+      console.log('User: ' + JSON.stringify(_user));
+      this.userData = _user;
+      console.log(this.userData.playedTracks);
+      this.userData.playedTracks.map(playedTrack => {
+        if (playedTrack.id === this.songId) {
+          trackExists = true;
         }
       });
+      if (!trackExists) {
+        const trackData: any = _spotifyService.getTrackObject(this.songId);
+        const releaseDate = trackData.album.released_date.split('-');
+        // const data = {
+        //   id: this.songId,
+        //   title: trackData.name,
+        //   artist: trackData.artists.map(artist => artist.name),
+        //   album_name?: trackData.album.name,
+        //   released: new Date(releaseDate[0], releaseDate[1], releaseDate[2]),
+        //   genre: ,
+        //   duration: ,
+        //   favourites: ,
+        //   image_url: ,
+        // }
+        this.userData.playedTracks.push;
+      }
+    });
+    $(document).ready(() => {});
+  }
+  toggleFavourited() {
+    this.userData.playedTracks.map(playedTrack => {
+      if (playedTrack.id === this.songID) {
+        playedTrack.favourites.favourited = !playedTrack.favourites.favourited;
+      }
     });
   }
   ngOnInit() {
     // Makes songID = the hash of the URL e.g #123 = 123
-    // this.route.fragment.subscribe(fragment => {
-    //   this.songID = fragment;
-    //   console.log('SongID: ' + this.songID);
-    // });
+    this.route.fragment.subscribe(fragment => {
+      this.songID = fragment;
+      console.log('SongID: ' + this.songID);
+    });
   }
 }

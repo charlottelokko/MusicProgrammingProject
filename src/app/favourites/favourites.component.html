@@ -1,123 +1,156 @@
 <div class="container-fluid row no-gutters">
   <div class="col-md-8">
-    <div class="row no-gutters">
+    <div class="row">
       <div
+        class="card border-primary mb-3"
         [id]="track.id"
-        class="card col-md-12"
         *ngFor="let track of favouriteTracks"
         [hidden]="!track.favourites.favourited"
       >
-        <div class="row no-gutters">
-          <div class="image-block col-md-4">
+        <div class="card-header">{{ track.title + ' - ' + track.artist }}</div>
+        <div class="card-body">
+          <div [id]="track.id" class="album-cover">
             <img [src]="track.image_url" class="w-100" />
           </div>
-          <div class="card-block col-md-6">
-            <div class="row">
-              <div class="track_info1 col-md-8 no-gutters">
-                <div>
-                  <p class="card-text">
-                    <span><b>Title:</b> {{ track.title }}</span>
-                  </p>
-                  <p class="card-text">
-                    <span><b>Artist:</b> {{ track.artist }}</span>
-                  </p>
-                  <p class="card-text">
-                    <span><b>Album Name:</b> {{ track.album_name }} </span>
-                  </p>
-                  <p class="card-text">
-                    <span><b>Released:</b> {{ track.released }}</span>
-                  </p>
-                  <p class="card-text">
-                    <span><b>Genre:</b> {{ track.genre }}</span>
-                  </p>
-                </div>
-              </div>
-              <div class="track_info2 col-md-4">
-                <div>
-                  <p class="card-text">
-                    Play Count: {{ track.favourites.play_count }}
-                  </p>
-                  <p class="card-text">Length: {{ track.duration }}</p>
-                </div>
-              </div>
-            </div>
+          <div [id]="track.id" class="track-info">
+            <p class="card-text">
+              <span><b>Title:</b> {{ track.title }}</span>
+            </p>
+            <p class="card-text">
+              <span><b>Artist:</b> {{ track.artist }}</span>
+            </p>
+            <p class="card-text">
+              <span><b>Album Name:</b> {{ track.album_name }} </span>
+            </p>
+            <p class="card-text">
+              <span><b>Released:</b> {{ track.released }}</span>
+            </p>
+            <p class="card-text">
+              <span><b>Genre:</b> {{ track.genre }}</span>
+            </p>
+            <p class="card-text"><b>Length:</b> {{ track.duration }}</p>
           </div>
-          <div class="side-block col-md-2">
-            <div>
-              <div class="favourite-block row no-gutters">
-                <p>
-                  <mat-icon (click)="this.setFavourited(track.id)">{{
-                    track.favourites.favourited ? 'favorite' : 'favorite_border'
-                  }}</mat-icon>
-                </p>
-                <p><b>Favourite</b></p>
-              </div>
-              <div class="rating-block row no-gutters">
-                <p><b>Rating</b></p>
+          <div [id]="track.id" class="user-info">
+            <p class="card-text">
+              <b>Play Count:</b> {{ track.favourites.play_count }}
+            </p>
 
-                <div class="rating-stars">
-                  <mat-icon
-                    [id]="'star-1-' + track.id"
-                    [ngClass]="{ rated: track.favourites.rating >= 1 }"
-                    (click)="this.updateRating($event)"
-                    >{{
-                      this.setRating(track.id) >= 1 ? 'star' : 'star_border'
-                    }}
-                  </mat-icon>
-                  <mat-icon
-                    [id]="'star-2-' + track.id"
-                    [ngClass]="{ rated: track.favourites.rating >= 2 }"
-                    (click)="this.updateRating($event)"
-                    >{{
-                      this.setRating(track.id) >= 2 ? 'star' : 'star_border'
-                    }}
-                  </mat-icon>
-                  <mat-icon
-                    [id]="'star-3-' + track.id"
-                    [ngClass]="{ rated: track.favourites.rating >= 3 }"
-                    (click)="this.updateRating($event)"
-                    >{{
-                      this.setRating(track.id) >= 3 ? 'star' : 'star_border'
-                    }}
-                  </mat-icon>
-                  <mat-icon
-                    [id]="'star-4-' + track.id"
-                    [ngClass]="{ rated: track.favourites.rating >= 4 }"
-                    (click)="this.updateRating($event)"
-                    >{{
-                      this.setRating(track.id) >= 4 ? 'star' : 'star_border'
-                    }}
-                  </mat-icon>
-                  <mat-icon
-                    [id]="'star-5-' + track.id"
-                    [ngClass]="{ rated: track.favourites.rating >= 5 }"
-                    (click)="this.updateRating($event)"
-                    >{{
-                      this.setRating(track.id) >= 5 ? 'star' : 'star_border'
-                    }}
-                  </mat-icon>
-                </div>
-              </div>
-            </div>
+            <p class="favourite">
+              <mat-icon (click)="this.setFavourited(track.id)">{{
+                track.favourites.favourited ? 'favorite' : 'favorite_border'
+              }}</mat-icon
+              ><br />
+              <b>Favourite</b>
+            </p>
+            <p class="rating">
+              <b>Rating</b><br />
+              <mat-icon
+                [id]="'star-1-' + track.id"
+                [ngClass]="{ rated: track.favourites.rating >= 1 }"
+                (click)="this.updateRating($event)"
+                >{{ this.setRating(track.id) >= 1 ? 'star' : 'star_border' }}
+              </mat-icon>
+              <mat-icon
+                [id]="'star-2-' + track.id"
+                [ngClass]="{ rated: track.favourites.rating >= 2 }"
+                (click)="this.updateRating($event)"
+                >{{ this.setRating(track.id) >= 2 ? 'star' : 'star_border' }}
+              </mat-icon>
+              <mat-icon
+                [id]="'star-3-' + track.id"
+                [ngClass]="{ rated: track.favourites.rating >= 3 }"
+                (click)="this.updateRating($event)"
+                >{{ this.setRating(track.id) >= 3 ? 'star' : 'star_border' }}
+              </mat-icon>
+              <mat-icon
+                [id]="'star-4-' + track.id"
+                [ngClass]="{ rated: track.favourites.rating >= 4 }"
+                (click)="this.updateRating($event)"
+                >{{ this.setRating(track.id) >= 4 ? 'star' : 'star_border' }}
+              </mat-icon>
+              <mat-icon
+                [id]="'star-5-' + track.id"
+                [ngClass]="{ rated: track.favourites.rating >= 5 }"
+                (click)="this.updateRating($event)"
+                >{{ this.setRating(track.id) >= 5 ? 'star' : 'star_border' }}
+              </mat-icon>
+            </p>
           </div>
+        </div>
+        <div
+          class="btn-group btn-group-toggle"
+          data-toggle="buttons"
+          style="width: 100%;"
+        >
+          <label
+            class="btn btn-primary active"
+            (click)="this.switchToAlbumCover(track.id)"
+          >
+            <input
+              type="radio"
+              name="options"
+              id="option1"
+              autocomplete="off"
+              checked=""
+            />
+            Album <br />Cover
+          </label>
+          <label
+            class="btn btn-primary"
+            (click)="this.switchToTrackInfo(track.id)"
+          >
+            <input
+              type="radio"
+              name="options"
+              id="option1"
+              autocomplete="off"
+            />
+            Track<br />Info
+          </label>
+          <label
+            class="btn btn-primary"
+            (click)="this.switchToUserInfo(track.id)"
+          >
+            <input
+              type="radio"
+              name="options"
+              id="option2"
+              autocomplete="off"
+            />
+            User<br />
+            Info
+          </label>
+          <label class="btn btn-primary" (click)="this.playTrack(track.id)">
+            <input
+              type="radio"
+              name="options"
+              id="option3"
+              autocomplete="off"
+            />
+            Play<br />
+            Track
+          </label>
         </div>
       </div>
     </div>
   </div>
-  <div class="card col-md-3">
-    <h2><b>Suggestions</b></h2>
-    <div class="row no-gutters">
-      <form>
-        <input
-          type="text"
-          name="searchStr"
-          [(ngModel)]="searchStr"
-          (keyup)="searchLyrics()"
-          class="mr-sm-2 form-control"
-          placeholder="Search Tracks..."
-        />
-      </form>
-      <div id="lyrics" class="primary row no-gutters"></div>
+  <div class="card col-md-4 recommendations">
+    <h2><b>Recommendations</b></h2>
+    <div
+      *ngFor="let track of recommendations"
+      class="card text-white bg-primary recommendation"
+    >
+      <div class="card-body">
+        <h4 class="card-title">{{ track.name }}</h4>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <span *ngFor="let artist of track.artists; let i = index">{{
+            i == 0 ? artist.name : ', ' + artist.name
+          }}</span>
+        </h6>
+        <button (click)="this.playTrack(track.id)" class="btn btn-primary">
+          Play Track
+        </button>
+      </div>
     </div>
   </div>
 </div>

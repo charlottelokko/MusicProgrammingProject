@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
+import { SpotifyService } from '../services/spotify.service';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
-import { GeniusService } from '../services/genius.service';
 import { PlayedTrack } from '../core/user-type';
 import * as $ from 'jquery';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-favourites',
@@ -16,13 +17,14 @@ import * as $ from 'jquery';
 })
 export class FavouritesComponent implements OnInit {
   favouriteTracks: Array<PlayedTrack>;
+  recommendations: Array<any>;
   user = this.auth.user;
   searchStr: string;
 
   constructor(
     private afs: AngularFirestore,
-    public auth: AuthService,
-    private _geniusService: GeniusService
+    private _spotifyService: SpotifyService,
+    public auth: AuthService
   ) {
     const track1: PlayedTrack = {
       id: '1',
@@ -70,41 +72,56 @@ export class FavouritesComponent implements OnInit {
       image_url: 'https://dummyimage.com/300x300/000000/fff.jpg',
     };
     this.favouriteTracks = [track1, track2, track3];
-
+    _spotifyService
+      .searchRecomendations(
+        this.favouriteTracks.map(track => track.id).toString()
+      )
+      .subscribe(recommendations => {
+        this.recommendations = (recommendations as any).tracks;
+        console.log(
+          'Recommendations: ' +
+            this.recommendations.map(track =>
+              JSON.stringify((track as any).artists)
+            )
+        );
+      });
+    $('.track-info, .user-info').ready(() => {
+      $('.track-info, .user-info').hide();
+    });
     $(document).ready(() => {
-      $('.rating-stars mat-icon').hover(
+      $('.rating mat-icon').hover(
         e => {
           console.log('hovered: ' + $(e.currentTarget).attr('id'));
           $(e.currentTarget).addClass('hover');
           $(e.currentTarget)
-            .prevAll()
+            .prevUntil('b')
             .addClass('hover');
         },
         e => {
           $(e.currentTarget).removeClass('hover');
           $(e.currentTarget)
-            .prevAll()
+            .prevUntil('b')
             .removeClass('hover');
         }
       );
-      $('.rating-stars mat-icon').click(e => {
+      $('.rating mat-icon').click(e => {
         console.log('rated: ' + $(e.currentTarget).attr('id'));
         // reset the ratings of the stars
         $(e.currentTarget)
-          .siblings()
+          .siblings('mat-icon')
           .removeClass('rated');
         $(e.currentTarget)
-          .siblings()
+          .siblings('mat-icon')
           .html('star_border');
 
         // display the correct star rating
         $(e.currentTarget).addClass('rated');
         $(e.currentTarget)
-          .prevAll()
+          .prevUntil('b')
           .addClass('rated');
         $(e.currentTarget).html('star');
         $(e.currentTarget)
-          .prevAll()
+          .prevUntil('b')
           .html('star');
       });
     });
@@ -133,12 +150,21 @@ export class FavouritesComponent implements OnInit {
       ? false
       : true;
   }
-  searchLyrics(searchtr) {
-    console.log(this.searchStr);
-    if (this.searchStr !== '') {
-      this._geniusService.searchLyrics(this.searchStr);
-    }
-  }
 
+  switchToAlbumCover(id) {
+    $('#' + id + '.track-info, #' + id + '.user-info').hide();
+    $('#' + id + '.album-cover').show();
+  }
+  switchToUserInfo(id) {
+    $('#' + id + '.track-info, #' + id + '.album-cover').hide();
+    $('#' + id + '.user-info').show();
+  }
+  switchToTrackInfo(id) {
+    $('#' + id + '.user-info, #' + id + '.album-cover').hide();
+    $('#' + id + '.track-info').show();
+  }
+  playTrack(id) {
+    window.location.href = 'main#' + id;
+  }
   ngOnInit() {}
 }

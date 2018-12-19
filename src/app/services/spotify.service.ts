@@ -56,6 +56,22 @@ export class SpotifyService {
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
   }
+  searchRecomendations(str: string) {
+    // console.log('Recommendation String: ' + str);
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' +
+        // tslint:disable-next-line:max-line-length
+        'BQDg9R221Lpqv_k-nZCakJv4Rq_f2QyiJF6fCUMu13QAc881ziOmr1SMqoKvoAr8GRfT5sVVueO79mpN-nlOD6WDCa_8s-TC3zCZH2gjo6WsC1TtkfKsBAmCwO7viWaAlZhIVpVyykQU1Ro'
+      // this.access_token
+    );
+    this.searchUrl =
+      'https://api.spotify.com/v1/recommendations?limit=5&seed_tracks=' +
+      encodeURIComponent('0c6xIDDpzE81m2q797ordA');
+    // because of this changes to map .json() doesn't exist anymore
+    // return this._http.get(this.searchUrl).map(res => res.json());
+    return this._http.get(this.searchUrl, { headers: headers });
+  }
   getTrackObject(id) {
     const headers = new HttpHeaders().set(
       'Authorization',

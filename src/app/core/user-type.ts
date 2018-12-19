@@ -7,7 +7,7 @@ export interface Favourites {
 export interface PlayedTrack {
   id: string;
   title?: string;
-  artist?: string;
+  artist?: Array<string>;
   album_name?: string;
   released?: string;
   genre?: string;
