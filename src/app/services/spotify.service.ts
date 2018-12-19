@@ -56,9 +56,6 @@ export class SpotifyService {
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
   }
-<<<<<<< HEAD
-
-=======
   searchPlaylist() {
     const headers = new HttpHeaders().set(
       'Authorization',
@@ -70,7 +67,6 @@ export class SpotifyService {
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
   }
->>>>>>> f425e854df48a4feaae5d73c8ec7ca622fef6496
   getTrackObject(id) {
     const headers = new HttpHeaders().set(
       'Authorization',
