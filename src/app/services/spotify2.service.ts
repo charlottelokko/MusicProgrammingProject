@@ -60,7 +60,7 @@ export class SpotifyService {
     private searchUrl: string;
     constructor(private _http: HttpClient) {}
 
-  searchMusic(str: string, type = 'track') {
+  searchSpotify(str: string, type = 'track') {
       console.log('This is it: ' + access_token);
     const headers = new HttpHeaders().set(
       'Authorization',

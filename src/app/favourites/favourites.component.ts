@@ -29,7 +29,7 @@ export class FavouritesComponent implements OnInit {
     const track1: PlayedTrack = {
       id: '1',
       title: 'Rock With You',
-      artist: ['Michael Jackson'],
+      artists: ['Michael Jackson'],
       album_name: 'Off The Wall',
       released: '1979',
       duration: 220 * 1000,
@@ -43,7 +43,7 @@ export class FavouritesComponent implements OnInit {
     const track2: PlayedTrack = {
       id: '2',
       title: 'Happier',
-      artist: ['Marshmellow', 'Bastille'],
+      artists: ['Marshmellow', 'Bastille'],
       album_name: 'N/A',
       released: '2018',
       duration: 214 * 1000,
@@ -57,7 +57,7 @@ export class FavouritesComponent implements OnInit {
     const track3: PlayedTrack = {
       id: '3',
       title: 'Mrs. Robinson',
-      artist: ['Simon & Garfunkel'],
+      artists: ['Simon & Garfunkel'],
       album_name: 'The Graduate',
       released: '1968',
       duration: 242 * 1000,
@@ -167,6 +167,9 @@ export class FavouritesComponent implements OnInit {
     const seconds = Math.floor((millis / 1000) % 60);
     const minutes = Math.floor(millis / 60000);
     return minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
+  }
+  strReplace(str) {
+    return str.replace(/,/g, ', ');
   }
   ngOnInit() {}
 }

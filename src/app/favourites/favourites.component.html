@@ -7,7 +7,9 @@
         *ngFor="let track of favouriteTracks"
         [hidden]="!track.favourites.favourited"
       >
-        <div class="card-header">{{ track.title + ' - ' + track.artist }}</div>
+        <div class="card-header">
+          {{ track.title + ' - ' + strReplace(track.artists.toString()) }}
+        </div>
         <div class="card-body">
           <div [id]="track.id" class="album-cover">
             <img [src]="track.image_url[0]" class="w-100" />
@@ -17,7 +19,12 @@
               <span><b>Title:</b> {{ track.title }}</span>
             </p>
             <p class="card-text">
-              <span><b>Artist:</b> {{ track.artist }}</span>
+              <span
+                ><b>Artist:</b
+                ><span *ngFor="let artist of track.artists; let i = index">{{
+                  i == 0 ? artist.name : ', ' + artist.name
+                }}</span></span
+              >
             </p>
             <p class="card-text">
               <span><b>Album Name:</b> {{ track.album_name }} </span>

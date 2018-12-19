@@ -24,10 +24,10 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {}
 
-  searchMusic() {
+  searchTracks() {
     console.log(this.searchStr);
     if (this.searchStr !== '') {
-      this._spotifyService.searchMusic(this.searchStr).subscribe(
+      this._spotifyService.searchSpotify(this.searchStr).subscribe(
         res => {
           console.log((res as any).tracks.items);
           // console.log((res as any).tracks.items.length);
@@ -48,32 +48,42 @@ export class NavbarComponent implements OnInit {
             console.log((res as any).tracks.items[i].name);
             track = (res as any).tracks.items[i].name;
             console.log((res as any).tracks.items[i].album.images[1].url);
+            image = (res as any).tracks.items[i].album.images[1].url;
 
             for (let j = 0; j < artistsAmount; j++) {
               console.log((res as any).tracks.items[i].artists[j].name);
-              if(j>0){
+              if (j > 0) {
               artists += ((res as any).tracks.items[i].artists[j].name + ', ');
               }
-              else{
+              // tslint:disable-next-line:one-line
+              else {
                 artists = (res as any).tracks.items[i].artists[j].name;
               }
             }
             const divy = document.createElement('div');
             const atag = document.createElement('a');
             const breaky = document.createElement('br');
+            const p1 = document.createElement('p');
+            const p2 = document.createElement('p');
+            const imageDiv = document.createElement('div');
 
-            // const trackList = document.createTextNode(track + ' : ');
-            // const artistList = document.createTextNode(artists);
-            // atag.appendChild(trackList);
-            // atag.appendChild(artistList);
-            atag.innerHTML = (track + ' : ' + artists);
+            const trackList = document.createTextNode(track);
+            const artistList = document.createTextNode(artists);
+            p1.appendChild(trackList);
+            p2.appendChild(artistList);
+            p1.append(p2);
+            atag.append(p1);
+            // atag.innerHTML = (track + ' : ' + artists);
             atag.setAttribute('href', 'main#' +  trackId);
             atag.setAttribute('class', 'dropdown-item overflow');
+            imageDiv.setAttribute('class', 'imageContainer');
+            imageDiv.setAttribute('src', image);
+
 
             // divy.appendChild(atag);
 
+           // element.appendChild(image);
             element.appendChild(atag);
-            element.appendChild(breaky);
           }
           // console.log((res as any).tracks.items[0].name);
           // console.log((res as any).tracks.items[0].artists[0].name);

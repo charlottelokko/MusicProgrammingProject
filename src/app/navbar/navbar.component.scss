@@ -1,6 +1,18 @@
 .searchy{
     text-align:center;
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+}
+.overflow {
+    overflow-x: hidden;
+    // width: 40%;
+}
 
+.imageContainer{ 
+    widows: 50px; 
+    height: 50px; 
+    float:left;
 }
 .overflow {
     overflow: hidden;

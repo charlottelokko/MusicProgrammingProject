@@ -18,11 +18,13 @@ import { SpotifyService } from '../services/spotify.service';
 export class MainComponent implements OnInit {
   userData: any;
   songId: string = window.location.hash;
+
+  // tslint:disable-next-line:max-line-length
   constructor(
     public auth: AuthService,
-    public _spotifyService: SpotifyService,
     private afs: AngularFirestore,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _spotifyService: SpotifyService
   ) {
     auth.user.subscribe(_user => {
       let trackExists = false;
@@ -38,13 +40,12 @@ export class MainComponent implements OnInit {
       }
       if (!trackExists) {
         const trackData: any = _spotifyService.getTrackObject(this.songId);
-        const releaseDate = trackData.album.released_date.split('-');
         const data = {
           id: this.songId,
           title: trackData.name,
-          artist: trackData.artists.map(artist => artist.name),
+          artists: trackData.artists.map(artist => artist.name),
           album_name: trackData.album.name,
-          released: new Date(releaseDate[0], releaseDate[1], releaseDate[2]),
+          released: trackData.album.release_date,
           duration: trackData.duration_ms,
           favourites: {
             rating: 0,
@@ -53,11 +54,33 @@ export class MainComponent implements OnInit {
           },
           image_url: trackData.images.map(image => image.url),
         };
-        this.userData.playedTracks.push(data);
+        this.userData.playedTracks.set(this.userData.playedTracks, {
+          merge: true,
+        });
       }
+    });
+    _spotifyService.getTrackObject(this.songId).subscribe(res => {
+      const name = (res as any).tracks.items.name;
+      let artists;
+      const artistsAmount = (res as any).tracks.items.artists.length;
+
+      for (let j = 0; j < artistsAmount; j++) {
+        console.log((res as any).tracks.items.artists[j].name);
+        if (j > 0) {
+          artists += (res as any).tracks.items.artists[j].name + ', ';
+        }
+        // tslint:disable-next-line:one-line
+        else {
+          artists = (res as any).tracks.items.artists[j].name;
+        }
+      }
+
+      console.log('main' + name);
+      console.log('main' + artists);
     });
     $(document).ready(() => {});
   }
+
   toggleFavourited() {
     this.userData.playedTracks.map(playedTrack => {
       if (playedTrack.id === this.songId) {
