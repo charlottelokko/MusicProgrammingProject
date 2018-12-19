@@ -26,18 +26,18 @@
     </ul>
 
     <form class="form-inline my-2 my-lg-0 ">
-      <!-- <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchMusic()" data-toggle="dropdown" class="form-control mr-sm-2 "  placeholder="Search Tracks..." />    -->
-      <div class="dropdown searchy">
-          <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchMusic()" data-toggle="dropdown" class="form-control mr-sm-2 "  placeholder="Search Tracks..." />   
+      <!-- <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchTracks()" data-toggle="dropdown" class="form-control mr-sm-2 "  placeholder="Search Tracks..." />    -->
+      <div class="dropdown">
+          <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchTracks()" data-toggle="dropdown" class="form-control mr-sm-2 "  placeholder="Search Tracks..." />   
 
           <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Results...          </button> -->
-          <div id = "drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div id = "drop" class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item overflow" href="#"></a>
           </div>
         </div>
       <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit"> Search </button> -->
     </form>
-    
+     
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link"  style="cursor:pointer" data-toggle="modal" data-target="#exampleModal">Log In</a>

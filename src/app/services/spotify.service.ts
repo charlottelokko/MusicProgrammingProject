@@ -43,7 +43,7 @@ export class SpotifyService {
     );
   }
 
-  searchMusic(str: string) {
+  searchSpotify(str: string) {
     const headers = new HttpHeaders().set(
       'Authorization',
       'Bearer ' + this.access_token
@@ -56,6 +56,7 @@ export class SpotifyService {
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
   }
+
   getTrackObject(id) {
     const headers = new HttpHeaders().set(
       'Authorization',
