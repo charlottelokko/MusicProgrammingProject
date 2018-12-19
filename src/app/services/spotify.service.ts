@@ -56,7 +56,7 @@ export class SpotifyService {
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
   }
-  searchPlaylist() {
+  displayPlaylist() {
     const headers = new HttpHeaders().set(
       'Authorization',
       'Bearer ' + this.access_token

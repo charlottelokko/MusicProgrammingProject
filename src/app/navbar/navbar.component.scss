@@ -6,7 +6,8 @@
 }
 .overflow {
     overflow-x: hidden;
-    // width: 40%;
+    overflow-wrap: break-word;
+    width: 95%;
 }
 
 .imageContainer{ 
@@ -14,10 +15,7 @@
     height: 50px; 
     float:left;
 }
-.overflow {
-    overflow: hidden;
-    width: 40%;
-}
+
 .boxshadow 
 {
   -moz-box-shadow: 3px 3px 5px #535353;

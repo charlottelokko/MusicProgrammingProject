@@ -18,10 +18,13 @@ export class MainComponent implements OnInit {
   songId: string = window.location.hash;
 
   // tslint:disable-next-line:max-line-length
-  constructor(public auth: AuthService, private afs: AngularFirestore, private route: ActivatedRoute, private _spotifyService: SpotifyService) {
+  constructor(public auth: AuthService, private afs: AngularFirestore, private route: ActivatedRoute, private _spotifyService: SpotifyService)
+  // tslint:disable-next-line:one-line
+  {
     _spotifyService.getTrackObject(this.songId).subscribe(
+
       res => {
-        let name = (res as any).tracks.items.name;
+        const name = (res as any).tracks.items.name;
         let artists;
         const artistsAmount = (res as any).tracks.items.artists.length;
 
@@ -61,7 +64,7 @@ export class MainComponent implements OnInit {
     });
   }
   ngOnInit() {
-    //Makes songId = the hash of the URL e.g #123 = 123
+    // Makes songId = the hash of the URL e.g #123 = 123
     this.route.fragment.subscribe(fragment => {
       this.songId = fragment;
       console.log('songId: ' + this.songId);

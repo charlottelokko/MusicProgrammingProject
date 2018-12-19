@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { SpotifyService } from '../services/spotify.services'; // changed this due to the file name change
 import { SpotifyService } from '../services/spotify.service';
 import * as $ from 'jquery';
 import { GeniusService } from '../services/genius.service';
@@ -53,7 +52,7 @@ export class NavbarComponent implements OnInit {
             for (let j = 0; j < artistsAmount; j++) {
               console.log((res as any).tracks.items[i].artists[j].name);
               if (j > 0) {
-              artists += ((res as any).tracks.items[i].artists[j].name + ', ');
+              artists += (', ' + (res as any).tracks.items[i].artists[j].name);
               }
               // tslint:disable-next-line:one-line
               else {
@@ -83,6 +82,7 @@ export class NavbarComponent implements OnInit {
             // divy.appendChild(atag);
 
            // element.appendChild(image);
+            element.appendChild(imageDiv);
             element.appendChild(atag);
           }
           // console.log((res as any).tracks.items[0].name);
