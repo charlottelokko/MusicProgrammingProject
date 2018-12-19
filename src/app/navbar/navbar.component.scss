@@ -2,13 +2,26 @@
     text-align:center;
     margin: 0 auto;
     display: block;
-    width: 100%;
+    width: 100%; 
+
 }
-.overflow {
-    overflow-x: hidden;
-    overflow-wrap: break-word;
-    width: 95%;
+
+.overflow{
+    overflow: hidden;
+    p{
+        background: teal;
+        width: 1px;
+        text-overflow: ellipsis;
+    }
 }
+// form{
+//     .overflow {
+//         width: 95%;
+//         white-space: nowrap;
+//         overflow: hidden;
+//         text-overflow: ellipsis;
+//     }
+// }
 
 .imageContainer{ 
     widows: 50px; 

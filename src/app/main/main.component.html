@@ -8,16 +8,19 @@
 
 </div>
 
-  <div class = "card-group"> 
-
-        <div class = "card"></div>
-   <div class = "col-sm-4-scroll">
+<div class = "card-group" > 
     <div class = "card">
-        <div class = "card-body" id="lyrics" class="primary row no-gutters" style= "overflow-y: scroll; height: 440px;"></div>
+        <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl('https://open.spotify.com/embed/track/' + this.songId)" id="please" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>       
+    </div>
+
+   <div class = "col-sm-4-scroll">
+        <div class = "card">
+            <div class = "card-body" id="lyrics" class="primary row no-gutters" style= "overflow-y: scroll; height: 440px;"></div>
+        </div>
     </div>
 </div>
-</div>
 
 
 
 
+<!-- src="'https://open.spotify.com/embed/track/' + songId" -->
