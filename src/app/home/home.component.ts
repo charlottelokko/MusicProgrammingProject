@@ -16,18 +16,26 @@ import * as $ from 'jquery';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  albumsobj: Array<any>;
   constructor(private _spotifyService: SpotifyService) {
-    $(document).ready(() => {
-      this._spotifyService.displayPlaylist().subscribe(
-      res => {
-        console.log('boop');
-        console.log((res as any).tracks.items);
-      });
+    
+      $(document).ready(() => {
+        setTimeout(() => {
+            this._spotifyService.displayPlaylist().subscribe(
+                      res => {
+                       
+                    this.albumsobj = (res as any).tracks.items;
+                    console.log(this.albumsobj);
+                   
+                        
+                      });
+        }, 2000)
+       
     });
    }
 
   ngOnInit() {
+    
   }
 
   homeView() {

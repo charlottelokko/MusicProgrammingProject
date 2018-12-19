@@ -1,1 +1,14 @@
-<p (onload)="homeView()" > Oh god .....</p>
+<p > Oh god .....</p>
+
+  <div  class = "card-group" > 
+    <div class = "card"> 
+        <div class="card border-primary mb-3" style="width: 20rem;"  *ngFor="let album of albumsobj | slice:0:10;">
+        <div class="card-body">
+        <img [src]="album.track.album.images[1].url" class="w-100"/>
+            <h4 class="card-title">Title: {{album.track.name}}</h4>
+            <h4 class="card-title">Artist: {{album.track.artists[0].name}}</h4>
+            <h4 class="card-title">Album: {{album.track.album.name}}</h4>
+    </div>
+    </div>
+    </div>
+</div>
