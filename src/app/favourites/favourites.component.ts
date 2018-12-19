@@ -29,47 +29,44 @@ export class FavouritesComponent implements OnInit {
     const track1: PlayedTrack = {
       id: '1',
       title: 'Rock With You',
-      artist: 'Michael Jackson',
+      artist: ['Michael Jackson'],
       album_name: 'Off The Wall',
       released: '1979',
-      genre: 'Pop',
-      duration: 220,
+      duration: 220 * 1000,
       favourites: {
         rating: 5,
         favourited: true,
         play_count: 1,
       },
-      image_url: 'https://dummyimage.com/300x300/000000/fff.jpg',
+      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
     };
     const track2: PlayedTrack = {
       id: '2',
       title: 'Happier',
-      artist: 'Marshmellow ft. Bastille',
+      artist: ['Marshmellow', 'Bastille'],
       album_name: 'N/A',
       released: '2018',
-      genre: 'Dance/Electronic',
-      duration: 214,
+      duration: 214 * 1000,
       favourites: {
         rating: 4,
         favourited: true,
         play_count: 1,
       },
-      image_url: 'https://dummyimage.com/300x300/000000/fff.jpg',
+      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
     };
     const track3: PlayedTrack = {
       id: '3',
       title: 'Mrs. Robinson',
-      artist: 'Simon & Garfunkel',
+      artist: ['Simon & Garfunkel'],
       album_name: 'The Graduate',
       released: '1968',
-      genre: 'Folk Rock',
-      duration: 242,
+      duration: 242 * 1000,
       favourites: {
         rating: 4,
         favourited: true,
         play_count: 1,
       },
-      image_url: 'https://dummyimage.com/300x300/000000/fff.jpg',
+      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
     };
     this.favouriteTracks = [track1, track2, track3];
     _spotifyService
@@ -165,6 +162,11 @@ export class FavouritesComponent implements OnInit {
   }
   playTrack(id) {
     window.location.href = 'main#' + id;
+  }
+  millisToMinutesAndSeconds(millis) {
+    const seconds = Math.floor((millis / 1000) % 60);
+    const minutes = Math.floor(millis / 60000);
+    return minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
   }
   ngOnInit() {}
 }

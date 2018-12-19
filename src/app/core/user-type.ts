@@ -10,10 +10,9 @@ export interface PlayedTrack {
   artist?: Array<string>;
   album_name?: string;
   released?: string;
-  genre?: string;
   duration?: number;
   favourites: Favourites;
-  image_url?: string;
+  image_url?: Array<string>;
 }
 export interface User {
   uid: string;

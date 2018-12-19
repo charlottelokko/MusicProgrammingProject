@@ -29,33 +29,38 @@ export class MainComponent implements OnInit {
       console.log('User: ' + JSON.stringify(_user));
       this.userData = _user;
       console.log(this.userData.playedTracks);
-      this.userData.playedTracks.map(playedTrack => {
-        if (playedTrack.id === this.songId) {
-          trackExists = true;
-        }
-      });
+      if (this.userData.playedTracks) {
+        this.userData.playedTracks.map(playedTrack => {
+          if (playedTrack.id === this.songId) {
+            trackExists = true;
+          }
+        });
+      }
       if (!trackExists) {
         const trackData: any = _spotifyService.getTrackObject(this.songId);
         const releaseDate = trackData.album.released_date.split('-');
-        // const data = {
-        //   id: this.songId,
-        //   title: trackData.name,
-        //   artist: trackData.artists.map(artist => artist.name),
-        //   album_name?: trackData.album.name,
-        //   released: new Date(releaseDate[0], releaseDate[1], releaseDate[2]),
-        //   genre: ,
-        //   duration: ,
-        //   favourites: ,
-        //   image_url: ,
-        // }
-        this.userData.playedTracks.push;
+        const data = {
+          id: this.songId,
+          title: trackData.name,
+          artist: trackData.artists.map(artist => artist.name),
+          album_name: trackData.album.name,
+          released: new Date(releaseDate[0], releaseDate[1], releaseDate[2]),
+          duration: trackData.duration_ms,
+          favourites: {
+            rating: 0,
+            favourited: false,
+            play_count: 1,
+          },
+          image_url: trackData.images.map(image => image.url),
+        };
+        this.userData.playedTracks.push(data);
       }
     });
     $(document).ready(() => {});
   }
   toggleFavourited() {
     this.userData.playedTracks.map(playedTrack => {
-      if (playedTrack.id === this.songID) {
+      if (playedTrack.id === this.songId) {
         playedTrack.favourites.favourited = !playedTrack.favourites.favourited;
       }
     });
@@ -63,8 +68,8 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     // Makes songID = the hash of the URL e.g #123 = 123
     this.route.fragment.subscribe(fragment => {
-      this.songID = fragment;
-      console.log('SongID: ' + this.songID);
+      this.songId = fragment;
+      console.log('SongID: ' + this.songId);
     });
   }
 }

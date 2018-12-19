@@ -5,9 +5,12 @@
 
 <!-- User NOT logged in -->
 <ng-template #guest>
-    <button (click)="auth.googleLogin()">
-        <fa-icon [icon]="['fab', 'google']"></fa-icon> Connect Google
+<div class= "wrapper">
+    <button class= "Googlebut" (click)="auth.googleLogin()">
+        <img src ="http://www.vitascientia.lt/assets/google.png" class = "loginbutton" >
+        <!-- <fa-icon [icon]="['fab', 'google']"></fa-icon> Connect Google -->
     </button>
+    </div>
 </ng-template>
 
 

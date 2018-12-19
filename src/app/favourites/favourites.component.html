@@ -10,7 +10,7 @@
         <div class="card-header">{{ track.title + ' - ' + track.artist }}</div>
         <div class="card-body">
           <div [id]="track.id" class="album-cover">
-            <img [src]="track.image_url" class="w-100" />
+            <img [src]="track.image_url[0]" class="w-100" />
           </div>
           <div [id]="track.id" class="track-info">
             <p class="card-text">
@@ -26,9 +26,8 @@
               <span><b>Released:</b> {{ track.released }}</span>
             </p>
             <p class="card-text">
-              <span><b>Genre:</b> {{ track.genre }}</span>
+              <b>Length:</b> {{ millisToMinutesAndSeconds(track.duration) }}
             </p>
-            <p class="card-text"><b>Length:</b> {{ track.duration }}</p>
           </div>
           <div [id]="track.id" class="user-info">
             <p class="card-text">

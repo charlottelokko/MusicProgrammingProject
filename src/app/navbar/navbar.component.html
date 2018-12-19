@@ -24,11 +24,12 @@
         <a class="nav-link" routerLinkActive="active" routerLink="/favourites">Favourites</a>
       </li>
     </ul>
+   
 
-    <form class="form-inline my-2 my-lg-0 ">
+    <form class="form-inline my-2 my-lg-0">
       <!-- <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchMusic()" data-toggle="dropdown" class="form-control mr-sm-2 "  placeholder="Search Tracks..." />    -->
-      <div class="dropdown searchy">
-          <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchMusic()" data-toggle="dropdown" class="form-control mr-sm-2 "  placeholder="Search Tracks..." />   
+      <div class="dropdown searchy" >
+          <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchMusic()" data-toggle="dropdown" class="form-control mr-sm-2" placeholder="Search Tracks..." />   
 
           <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Results...          </button> -->
           <div id = "drop" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -50,12 +51,12 @@
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content roundbox boxshadow">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title text-center" id="exampleModalLabel"  >Log In</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
           <span aria-hidden="true">&times;</span>
-        </button>
+        </button>-->
       </div>
       <div class="modal-body">
         <app-user-profile></app-user-profile>
