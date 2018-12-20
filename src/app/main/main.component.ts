@@ -86,18 +86,12 @@ export class MainComponent implements OnInit {
     this.route.fragment.subscribe(fragment => {
       const trackString = fragment.split('+');
       this.songId = trackString[0];
-<<<<<<< HEAD
-      const lyricsString = trackString[1] + ' ' + trackString[2];
-        console.log('lyricsString:' + lyricsString);
-        console.log(this._geniusService.searchLyrics(lyricsString));
-=======
       const lyricsString =
         decodeURIComponent(trackString[1]) +
         ' ' +
         decodeURIComponent(trackString[2]);
       console.log('lyricsString:' + lyricsString);
       console.log(this._geniusService.searchLyrics(lyricsString));
->>>>>>> e217ad59eaee79459afc7cf0b8a99c10869e2980
     });
   }
 }
