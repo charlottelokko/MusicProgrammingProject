@@ -38,7 +38,7 @@ export class FavouritesComponent implements OnInit {
         favourited: true,
         play_count: 1,
       },
-      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
+      image_url: ['https://i.scdn.co/image/cafda5ec1191dc7423406cd2779eea004e36d3eb'],
     };
     const track2: PlayedTrack = {
       id: '2',
@@ -52,7 +52,7 @@ export class FavouritesComponent implements OnInit {
         favourited: true,
         play_count: 1,
       },
-      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
+      image_url: ['https://i.scdn.co/image/600b9b6e68c7d63495d653d544a9bbbbe380f194'],
     };
     const track3: PlayedTrack = {
       id: '3',
@@ -66,7 +66,7 @@ export class FavouritesComponent implements OnInit {
         favourited: true,
         play_count: 1,
       },
-      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
+      image_url: ['https://i.scdn.co/image/4e8ab1497f90e34eab71f3e75eb82de171491e3f'],
     };
     this.favouriteTracks = [track1, track2, track3];
     // reference to firestore collection
