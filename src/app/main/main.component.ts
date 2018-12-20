@@ -9,8 +9,12 @@ import {
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { SpotifyService } from '../services/spotify.service';
-import { GeniusService} from '../services/genius.service';
-import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
+import { GeniusService } from '../services/genius.service';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeUrl,
+} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-main',
@@ -64,13 +68,10 @@ export class MainComponent implements OnInit {
     //     });
     //   }
     // });
-    $(document).ready(() => {
-
-  });
+    $(document).ready(() => {});
 
     // this.url = this.sanitizer.bypassSecurityTrustUrl('https://open.spotify.com/embed/track/' + this.songId);
     // console.log(this.url);
-
   }
 
   toggleFavourited() {
@@ -85,9 +86,12 @@ export class MainComponent implements OnInit {
     this.route.fragment.subscribe(fragment => {
       const trackString = fragment.split('+');
       this.songId = trackString[0];
-      const lyricsString = trackString[1] + ' ' + trackString[2];
-          console.log('lyricsString:' + lyricsString);
-        console.log(this._geniusService.searchLyrics(lyricsString));
+      const lyricsString =
+        decodeURIComponent(trackString[1]) +
+        ' ' +
+        decodeURIComponent(trackString[2]);
+      console.log('lyricsString:' + lyricsString);
+      console.log(this._geniusService.searchLyrics(lyricsString));
     });
   }
 }
