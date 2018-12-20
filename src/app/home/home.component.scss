@@ -27,3 +27,29 @@
   height: auto;
   word-wrap: break-word;
 }
+.play-button {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 318px;
+  width: 100%;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #00b98c;
+  opacity: 0;
+  transition: opacity 0.3s;
+  &:hover {
+    opacity: 1;
+  }
+  text-align: center;
+  mat-icon {
+    font-size: 120px;
+    position: relative;
+    top: calc(50% - 60px);
+    margin-left: -100px;
+    &:hover {
+      text-shadow: 2px 2px 4px #00b98c;
+      cursor: pointer;
+    }
+  }
+}

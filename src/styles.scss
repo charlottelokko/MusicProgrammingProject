@@ -1,4 +1,14 @@
 /* You can add global styles to this file, and also import other style files*/
- @import url("https://bootswatch.com/4/darkly/bootstrap.min.css");
+@import url("https://bootswatch.com/4/darkly/bootstrap.min.css");
 
- body{overflow-x: hidden;}
+body {
+  overflow-x: hidden;
+}
+
+* {
+  mat-icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

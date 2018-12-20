@@ -35,39 +35,50 @@ export class MainComponent implements OnInit {
     private _geniusService: GeniusService,
     public sanitizer: DomSanitizer
   ) {
-    // auth.user.subscribe(_user => {
-    //   let trackExists = false;
-    //   console.log('User: ' + JSON.stringify(_user));
-    //   this.userData = _user;
-    //   console.log(this.userData.playedTracks);
-    //   if (this.userData.playedTracks) {
-    //     this.userData.playedTracks.map(playedTrack => {
-    //       if (playedTrack.id === this.songId) {
-    //         trackExists = true;
-    //       }
-    //     });
-    //   }
-    //   if (!trackExists) {
-    //     const trackData: any = _spotifyService.getTrackObject(this.songId);
-    //     const data = {
-    //       id: this.songId,
-    //       title: trackData.name,
-    //       artists: trackData.artists.map(artist => artist.name),
-    //       album_name: trackData.album.name,
-    //       released: trackData.album.release_date,
-    //       duration: trackData.duration_ms,
-    //       favourites: {
-    //         rating: 0,
-    //         favourited: false,
-    //         play_count: 1,
-    //       },
-    //       image_url: trackData.images.map(image => image.url),
-    //     };
-    //     this.userData.playedTracks.set(this.userData.playedTracks, {
-    //       merge: true,
-    //     });
-    //   }
-    // });
+    auth.user.subscribe(_user => {
+      let trackExists = false;
+      console.log('User: ' + JSON.stringify(_user));
+      this.userData = _user;
+      console.log('Played Tracks: ' + this.userData.playedTracks);
+      if (this.userData.playedTracks !== undefined) {
+        this.userData.playedTracks.map(playedTrack => {
+          if (playedTrack.id === this.songId) {
+            trackExists = true;
+          }
+        });
+      }
+      // if (!trackExists) {
+      //   let trackData: any;
+      //   const trackDataObj: any = _spotifyService
+      //     .getTrackObject(this.songId)
+      //     .subscribe(res => {
+      //       trackData = res;
+
+      //       console.log(trackData);
+      //       const data = {
+      //         id: this.songId,
+      //         title: trackData.name,
+      //         artists: trackData.artists.map(artist => artist.name),
+      //         album_name: trackData.album.name,
+      //         released: trackData.album.release_date,
+      //         duration: trackData.duration_ms,
+      //         favourites: {
+      //           rating: 0,
+      //           favourited: false,
+      //           play_count: 1,
+      //         },
+      //         image_url: trackData.images,
+      //       };
+      //       const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      //         `users/${_user.uid}`
+      //       );
+      //       this.userData.playedTrack.push(data);
+      //       userRef.set(this.userData, {
+      //         merge: true,
+      //       });
+      //     });
+      // }
+    });
     $(document).ready(() => {});
 
     // this.url = this.sanitizer.bypassSecurityTrustUrl('https://open.spotify.com/embed/track/' + this.songId);

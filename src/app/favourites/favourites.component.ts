@@ -69,19 +69,29 @@ export class FavouritesComponent implements OnInit {
       image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
     };
     this.favouriteTracks = [track1, track2, track3];
-    _spotifyService
-      .searchRecomendations(
-        this.favouriteTracks.map(track => track.id).toString()
-      )
-      .subscribe(recommendations => {
-        this.recommendations = (recommendations as any).tracks;
-        console.log(
-          'Recommendations: ' +
-            this.recommendations.map(track =>
-              JSON.stringify((track as any).artists)
-            )
-        );
-      });
+    // reference to firestore collection
+    const dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
+    const data = dataDoc.valueChanges(); // Observable of Secret Data
+    data.subscribe(
+      e => {
+        _spotifyService
+          .searchRecomendations(
+            this.favouriteTracks.map(track => track.id).toString()
+          )
+          .subscribe(recommendations => {
+            this.recommendations = (recommendations as any).tracks;
+            console.log(
+              'Recommendations: ' +
+                this.recommendations.map(track =>
+                  JSON.stringify((track as any).artists)
+                )
+            );
+          });
+      },
+      err => {
+        console.log('Error:' + err);
+      }
+    );
     $('.track-info, .user-info').ready(() => {
       $('.track-info, .user-info').hide();
     });

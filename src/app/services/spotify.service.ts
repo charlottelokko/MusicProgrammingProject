@@ -60,8 +60,7 @@ export class SpotifyService {
     // console.log('Recommendation String: ' + str);
     const headers = new HttpHeaders().set(
       'Authorization',
-      'Bearer ' +
-      this.access_token
+      'Bearer ' + this.access_token
     );
     this.searchUrl =
       'https://api.spotify.com/v1/recommendations?limit=5&seed_tracks=' +
@@ -92,5 +91,3 @@ export class SpotifyService {
     return this._http.get(this.searchUrl, { headers: headers });
   }
 }
-
-

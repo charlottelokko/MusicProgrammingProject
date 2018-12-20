@@ -9,7 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FavouritesComponent } from './favourites/favourites.component';
 import { MainComponent } from './main/main.component';
-import {CoreModule} from './core/core.module';
+import { AboutComponent } from './about/about.component';
+import { CoreModule } from './core/core.module';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -26,7 +27,6 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 // Import for reponsive bootstrp layout.
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -34,7 +34,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 
 // Import for Angular Material Icons
 import { MatIconModule } from '@angular/material';
-import { AboutComponent } from './about/about.component';
+
+// Add an icon to the library for convenient access in other components
+library.add(fab, fas, far);
+
 const appRoutes: Routes = [
   {
     path: 'home',
@@ -86,20 +89,15 @@ const appRoutes: Routes = [
     CoreModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule,
     RouterModule.forRoot(
-      appRoutes,
-     // { enableTracing: true } // <-- debugging purposes only
+      appRoutes
+      // { enableTracing: true } // <-- debugging purposes only
     ),
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'listen-and-lyrics'),
     AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  constructor() {
-    // Add an icon to the library for convenient access in other components
-    library.add(fab, fas, far);
-  }
-}
+export class AppModule {}

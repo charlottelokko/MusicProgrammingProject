@@ -9,7 +9,21 @@
 <h3 style="text-align: center">Spotify's Current Top 50 Global Charts!</h3>
 <div class="row no-gutters">
   <div class="card mb-3" style="width: 20rem;" *ngFor="let album of albumsobj">
-    <img [src]="album.track.album.images[1].url" class="w-100 " />
+    <div>
+      <img [src]="album.track.album.images[1].url" class="w-100 " />
+      <div class="play-button">
+        <mat-icon
+          (click)="
+            this.playTrack(
+              album.track.id,
+              album.track.name,
+              album.track.artists[0].name
+            )
+          "
+          >play_arrow</mat-icon
+        >
+      </div>
+    </div>
     <div class="card-body">
       <h5 class="card-title">Title: {{ album.track.name }}</h5>
       <h5 class="card-title">Artist: {{ album.track.artists[0].name }}</h5>
