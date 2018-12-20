@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
                    
                         
                       });
-        }, 2000)
+        }, 3000)
        
     });
    }
@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
   }
 
   homeView() {
+    console.log("hello");
 
   }
 
