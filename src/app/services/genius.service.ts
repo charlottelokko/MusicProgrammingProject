@@ -29,7 +29,24 @@ export class GeniusService {
   private access_token: string;
   html: string;
   lyricHTML: string;
-  constructor(private afs: AngularFirestore) {
+   constructor(private afs: AngularFirestore) {
+  //   // reference to firestore collection
+  //   this.dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
+  //   this.data = this.dataDoc.valueChanges(); // Observable of Secret Data
+  //   this.data.subscribe(
+  //     e => {
+  //       // stores access_token from firestore
+  //       this.access_token = e.genius_access_token;
+  //       console.log(this.access_token);
+  //     },
+  //     err => {
+  //       console.log('Error:' + err);
+  //     }
+  //   );
+  }
+
+  searchLyrics(str: string) {
+    
     // reference to firestore collection
     this.dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
     this.data = this.dataDoc.valueChanges(); // Observable of Secret Data
@@ -37,15 +54,8 @@ export class GeniusService {
       e => {
         // stores access_token from firestore
         this.access_token = e.genius_access_token;
-      },
-      err => {
-        console.log('Error:' + err);
-      }
-    );
-  }
-
-  searchLyrics(str: string) {
-    this.searchUrl =
+        console.log(this.access_token);
+        this.searchUrl =
       'https://api.genius.com/search?access_token=' +
       this.access_token +
       '&q=' +
@@ -76,6 +86,12 @@ export class GeniusService {
       .catch(err => {
         console.log('Error: ' + err);
       });
+      },
+      err => {
+        console.log('Error:' + err);
+      }
+    );
+    
   }
   extractLyrics(html) {
     const startIndex = html.indexOf('<div initial-content-for="lyrics">');
