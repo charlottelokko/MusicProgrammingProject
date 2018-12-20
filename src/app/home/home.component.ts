@@ -20,17 +20,12 @@ export class HomeComponent implements OnInit {
   constructor(private _spotifyService: SpotifyService) {
 
       $(document).ready(() => {
-        
-           const displayPlay= this._spotifyService.displayPlaylist().subscribe(
+           const displayPlay = this._spotifyService.displayPlaylist().subscribe(
                       res => {
                     this.albumsobj = (res as any).tracks.items;
                     console.log(this.albumsobj);
 
                    });
-
-        
-
-       
     });
    }
 
