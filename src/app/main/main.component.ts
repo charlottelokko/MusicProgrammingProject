@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { User, Favourites, PlayedTrack } from '../core/user-type';
 import {
@@ -9,6 +9,7 @@ import {
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { SpotifyService } from '../services/spotify.service';
+import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-main',
@@ -18,49 +19,54 @@ import { SpotifyService } from '../services/spotify.service';
 export class MainComponent implements OnInit {
   userData: any;
   songId: string = window.location.hash;
+  url: string;
 
   // tslint:disable-next-line:max-line-length
   constructor(
     public auth: AuthService,
     private afs: AngularFirestore,
     private route: ActivatedRoute,
-    private _spotifyService: SpotifyService
+    private _spotifyService: SpotifyService,
+    public sanitizer: DomSanitizer
   ) {
-    auth.user.subscribe(_user => {
-      let trackExists = false;
-      console.log('User: ' + JSON.stringify(_user));
-      this.userData = _user;
-      console.log(this.userData.playedTracks);
-      if (this.userData.playedTracks) {
-        this.userData.playedTracks.map(playedTrack => {
-          if (playedTrack.id === this.songId) {
-            trackExists = true;
-          }
-        });
-      }
-      if (!trackExists) {
-        const trackData: any = _spotifyService.getTrackObject(this.songId);
-        const data = {
-          id: this.songId,
-          title: trackData.name,
-          artists: trackData.artists.map(artist => artist.name),
-          album_name: trackData.album.name,
-          released: trackData.album.release_date,
-          duration: trackData.duration_ms,
-          favourites: {
-            rating: 0,
-            favourited: false,
-            play_count: 1,
-          },
-          image_url: trackData.images.map(image => image.url),
-        };
-        this.userData.playedTracks.set(this.userData.playedTracks, {
-          merge: true,
-        });
-      }
-    });
-    _spotifyService.getTrackObject(this.songId).subscribe(res => {
-      const name = (res as any).tracks.items.name;
+    // auth.user.subscribe(_user => {
+    //   let trackExists = false;
+    //   console.log('User: ' + JSON.stringify(_user));
+    //   this.userData = _user;
+    //   console.log(this.userData.playedTracks);
+    //   if (this.userData.playedTracks) {
+    //     this.userData.playedTracks.map(playedTrack => {
+    //       if (playedTrack.id === this.songId) {
+    //         trackExists = true;
+    //       }
+    //     });
+    //   }
+    //   if (!trackExists) {
+    //     const trackData: any = _spotifyService.getTrackObject(this.songId);
+    //     const data = {
+    //       id: this.songId,
+    //       title: trackData.name,
+    //       artists: trackData.artists.map(artist => artist.name),
+    //       album_name: trackData.album.name,
+    //       released: trackData.album.release_date,
+    //       duration: trackData.duration_ms,
+    //       favourites: {
+    //         rating: 0,
+    //         favourited: false,
+    //         play_count: 1,
+    //       },
+    //       image_url: trackData.images.map(image => image.url),
+    //     };
+    //     this.userData.playedTracks.set(this.userData.playedTracks, {
+    //       merge: true,
+    //     });
+    //   }
+    // });
+ _spotifyService.getTrackObject(this.songId).subscribe(res => {
+      console.log((res as any).tracks.items);
+      console.log('test' + JSON.stringify(res));
+      const name = (res as any).tracks.items[0].name;
+      console.log(name);
       let artists;
       const artistsAmount = (res as any).tracks.items.artists.length;
 
@@ -75,10 +81,18 @@ export class MainComponent implements OnInit {
         }
       }
 
-      console.log('main' + name);
-      console.log('main' + artists);
+      // const source = 'https://open.spotify.com/embed/track/';
+      // const element = document.getElementById('please');
+      // const iframe = document.createElement('src');
+      // iframe.append(source + this.songId);
+
+
+
     });
-    $(document).ready(() => {});
+    // this.url = this.sanitizer.bypassSecurityTrustUrl('https://open.spotify.com/embed/track/' + this.songId);
+    // console.log(this.url);
+    $(document).ready(() => {
+    });
   }
 
   toggleFavourited() {

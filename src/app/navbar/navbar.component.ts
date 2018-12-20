@@ -41,16 +41,16 @@ export class NavbarComponent implements OnInit {
           element.innerHTML = ' ';
           for (let i = 0; i < 10; i++) {
             trackId = (res as any).tracks.items[i].id;
-            console.log((res as any).tracks.items[i].id);
+            // console.log((res as any).tracks.items[i].id);
             artists = ' ';
             const artistsAmount = (res as any).tracks.items[i].artists.length;
-            console.log((res as any).tracks.items[i].name);
+            // console.log((res as any).tracks.items[i].name);
             track = (res as any).tracks.items[i].name;
-            console.log((res as any).tracks.items[i].album.images[1].url);
+            // console.log((res as any).tracks.items[i].album.images[1].url);
             image = (res as any).tracks.items[i].album.images[1].url;
 
             for (let j = 0; j < artistsAmount; j++) {
-              console.log((res as any).tracks.items[i].artists[j].name);
+              // console.log((res as any).tracks.items[i].artists[j].name);
               if (j > 0) {
               artists += (', ' + (res as any).tracks.items[i].artists[j].name);
               }
@@ -64,6 +64,7 @@ export class NavbarComponent implements OnInit {
             const breaky = document.createElement('br');
             const p1 = document.createElement('p');
             const p2 = document.createElement('p');
+
             const imageDiv = document.createElement('div');
 
             const trackList = document.createTextNode(track);
@@ -71,16 +72,13 @@ export class NavbarComponent implements OnInit {
             p1.appendChild(trackList);
             p2.appendChild(artistList);
             p1.append(p2);
-            atag.append(p1);
+            atag.appendChild(p1);
             // atag.innerHTML = (track + ' : ' + artists);
-            atag.setAttribute('href', 'main#' +  trackId);
+            atag.setAttribute('routerLink', 'main#' +  trackId);
             atag.setAttribute('class', 'dropdown-item overflow');
             imageDiv.setAttribute('class', 'imageContainer');
             imageDiv.setAttribute('src', image);
-
-
             // divy.appendChild(atag);
-
            // element.appendChild(image);
             element.appendChild(imageDiv);
             element.appendChild(atag);

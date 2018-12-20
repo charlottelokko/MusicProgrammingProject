@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav id = "fun" class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" routerLink="/home">Listen & Lyrics</a>
   <button
     class="navbar-toggler"
@@ -31,8 +31,8 @@
       <div class="dropdown searchy" >
           <input type= "text" name="searchStr" [(ngModel)]="searchStr" (keyup) = "searchTracks()" data-toggle="dropdown" class="form-control mr-sm-2" placeholder="Search Tracks..." autocomplete="off" />
           <!-- <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Results...          </button> -->
-          <div id = "drop" class="dropdown-menu dropdown-menu-left overflow" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item " href="#"></a>
+          <div id = "drop" class="dropdown-menu dropdown-menu-left overflow" style="width:120%" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#"></a>
           </div>
         </div>
       <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit"> Search </button> -->
@@ -50,7 +50,7 @@
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content roundbox boxshadow">
+    <div class="modal-content roundbox ">
       <div class="modal-header">
         <h5 class="modal-title text-center" id="exampleModalLabel"  >Log In</h5>
         <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
