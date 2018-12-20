@@ -82,7 +82,7 @@ exports.refreshspotifyaccesstoken = functions.https.onRequest((req, res) => {
         headers: {
           Authorization: 'Bearer ' + token,
         },
-        scopes: 'playlist-modify-public playlist-modify-private',
+        scopes: 'user-read-private user-read-birthdate user-read-email playlist-read-private user-library-read user-library-modify user-top-read playlist-read-collaborative playlist-modify-public playlist-modify-private user-follow-read user-follow-modify user-read-playback-state user-read-currently-playing user-modify-playback-state user-read-recently-played',
         json: true,
       };
       request.get(options, (error, response, body) => {

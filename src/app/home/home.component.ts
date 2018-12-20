@@ -18,24 +18,27 @@ import * as $ from 'jquery';
 export class HomeComponent implements OnInit {
   albumsobj: Array<any>;
   constructor(private _spotifyService: SpotifyService) {
-    
+
       $(document).ready(() => {
         setTimeout(() => {
             this._spotifyService.displayPlaylist().subscribe(
                       res => {
-                       
                     this.albumsobj = (res as any).tracks.items;
                     console.log(this.albumsobj);
+<<<<<<< HEAD
                    
                         
                       });
         }, 3000)
        
+=======
+                    });
+        }, 2000);
+>>>>>>> 33ace7c11c19016af45743098283f2b058ba175e
     });
    }
 
   ngOnInit() {
-    
   }
 
   homeView() {
