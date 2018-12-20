@@ -17,8 +17,10 @@
 <!-- User logged in -->
 <ng-template #authenticated>
     <div *ngIf="auth.user | async as user">
-        <h3>Hiya, {{ user.displayName }}</h3>
+        <img class="center" src={{user.photoURL}}>
+        <h3 style="text-align: center">Hiya, {{ user.displayName }}</h3>
+        <h4 style="text-align: center">Email: {{user.email}}</h4>
         <!-- <img  [src]="user.photoURL"> -->
-        <button class="btn btn-primary" (click)="auth.signOut()">Logout</button>
+        <button class="btn btn-primary center" (click)="auth.signOut()">Logout</button>
     </div>
 </ng-template>
