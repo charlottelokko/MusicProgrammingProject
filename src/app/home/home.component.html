@@ -1,19 +1,18 @@
- <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h3 class="display-3">Listen & Lyrics: It's all in the name</h3>
-        <p class="lead">Wanna sing? Or read along to your favourite tracks!?</p>
-        <hr class="my-2">
-        <p>Search up the top and then look below!</p>
-    </div>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h3 class="display-3">Listen & Lyrics: It's all in the name</h3>
+    <p class="lead">Wanna sing? Or read along to your favourite tracks!?</p>
+    <hr class="my-2" />
+    <p>Search up the top and then look below!</p>
+  </div>
 </div>
-  <div class = "row no-gutters" > 
-        <div class="card mb-3" style="width: 20rem;"  *ngFor="let album of albumsobj | slice:0:50;">
-            <img [src]="album.track.album.images[1].url" class="w-100 "/>
-            <div class="card-body">
-                <h4 class="card-title">Title: {{album.track.name}}</h4>
-                <h4 class="card-title">Artist: {{album.track.artists[0].name}}</h4>
-                <h4 class="card-title">Album: {{album.track.album.name}}</h4>
-
-            </div>
+<div class="row no-gutters">
+  <div class="card mb-3" style="width: 20rem;" *ngFor="let album of albumsobj">
+    <img [src]="album.track.album.images[1].url" class="w-100 " />
+    <div class="card-body">
+      <h4 class="card-title">Title: {{ album.track.name }}</h4>
+      <h4 class="card-title">Artist: {{ album.track.artists[0].name }}</h4>
+      <h4 class="card-title">Album: {{ album.track.album.name }}</h4>
     </div>
+  </div>
 </div>
