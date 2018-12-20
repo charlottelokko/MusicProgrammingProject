@@ -46,7 +46,6 @@ export class GeniusService {
   }
 
   searchLyrics(str: string) {
-    
     // reference to firestore collection
     this.dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
     this.data = this.dataDoc.valueChanges(); // Observable of Secret Data
@@ -54,7 +53,7 @@ export class GeniusService {
       e => {
         // stores access_token from firestore
         this.access_token = e.genius_access_token;
-        console.log(this.access_token);
+       // console.log(this.access_token);
         this.searchUrl =
       'https://api.genius.com/search?access_token=' +
       this.access_token +
@@ -91,7 +90,6 @@ export class GeniusService {
         console.log('Error:' + err);
       }
     );
-    
   }
   extractLyrics(html) {
     const startIndex = html.indexOf('<div initial-content-for="lyrics">');
