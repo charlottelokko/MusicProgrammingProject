@@ -20,10 +20,7 @@
             </p>
             <p class="card-text">
               <span
-                ><b>Artist:</b
-                ><span *ngFor="let artist of track.artists; let i = index">{{
-                  i == 0 ? artist.name : ', ' + artist.name
-                }}</span></span
+                ><b>Artist: </b>{{ strReplace(track.artists.toString()) }}</span
               >
             </p>
             <p class="card-text">
