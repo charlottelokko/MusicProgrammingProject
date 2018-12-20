@@ -64,13 +64,13 @@ export class MainComponent implements OnInit {
     //     });
     //   }
     // });
-    $(document).ready(() => {        
+    $(document).ready(() => {
 
   });
-    
+
     // this.url = this.sanitizer.bypassSecurityTrustUrl('https://open.spotify.com/embed/track/' + this.songId);
     // console.log(this.url);
-   
+
   }
 
   toggleFavourited() {
