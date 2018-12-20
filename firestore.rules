@@ -6,5 +6,8 @@ service cloud.firestore {
     match /SecretAccountData/SAD {
       allow read;
     }
+    match /users/{uid} {
+      allow read, write: if request.auth.uid != null;
+    }
   }
 }
