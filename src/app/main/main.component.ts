@@ -9,6 +9,7 @@ import {
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { SpotifyService } from '../services/spotify.service';
+import { GeniusService} from '../services/genius.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 
 @Component({
@@ -27,6 +28,7 @@ export class MainComponent implements OnInit {
     private afs: AngularFirestore,
     private route: ActivatedRoute,
     private _spotifyService: SpotifyService,
+    private _geniusService: GeniusService,
     public sanitizer: DomSanitizer
   ) {
     // auth.user.subscribe(_user => {
@@ -62,28 +64,13 @@ export class MainComponent implements OnInit {
     //     });
     //   }
     // });
- _spotifyService.getTrackObject(this.songId).subscribe(res => {
-      console.log((res as any).tracks.items);
-      console.log('test' + JSON.stringify(res));
-      const name = (res as any).tracks.items[0].name;
-      console.log(name);
-      let artists;
-      const artistsAmount = (res as any).tracks.items.artists.length;
+    $(document).ready(() => {        
 
-      for (let j = 0; j < artistsAmount; j++) {
-        console.log((res as any).tracks.items.artists[j].name);
-        if (j > 0) {
-          artists += (res as any).tracks.items.artists[j].name + ', ';
-        }
-        // tslint:disable-next-line:one-line
-        else {
-          artists = (res as any).tracks.items.artists[j].name;
-        }
-      }
-    });
-
-  $(document).ready(() => {
   });
+    
+    // this.url = this.sanitizer.bypassSecurityTrustUrl('https://open.spotify.com/embed/track/' + this.songId);
+    // console.log(this.url);
+   
   }
 
   toggleFavourited() {
@@ -96,8 +83,11 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     // Makes songId = the hash of the URL e.g #123 = 123
     this.route.fragment.subscribe(fragment => {
-      this.songId = fragment;
-      console.log('SongID: ' + this.songId);
+      const trackString = fragment.split('+');
+      this.songId = trackString[0];
+      const lyricsString = trackString[1] + ' ' + trackString[2];
+          console.log('lyricsString:' + lyricsString);
+        console.log(this._geniusService.searchLyrics(lyricsString));
     });
   }
 }
