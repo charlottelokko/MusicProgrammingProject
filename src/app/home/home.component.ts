@@ -25,11 +25,8 @@ export class HomeComponent implements OnInit {
                       res => {
                     this.albumsobj = (res as any).tracks.items;
                     console.log(this.albumsobj);
-                   
-                        
                       });
-        }, 3000)
-       
+        }, 3000);
     });
    }
 
@@ -37,8 +34,7 @@ export class HomeComponent implements OnInit {
   }
 
   homeView() {
-    console.log("hello");
-
+    console.log('hello');
   }
 
 }

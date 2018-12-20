@@ -80,19 +80,10 @@ export class MainComponent implements OnInit {
           artists = (res as any).tracks.items.artists[j].name;
         }
       }
-
-      // const source = 'https://open.spotify.com/embed/track/';
-      // const element = document.getElementById('please');
-      // const iframe = document.createElement('src');
-      // iframe.append(source + this.songId);
-
-
-
     });
-    // this.url = this.sanitizer.bypassSecurityTrustUrl('https://open.spotify.com/embed/track/' + this.songId);
-    // console.log(this.url);
-    $(document).ready(() => {
-    });
+
+  $(document).ready(() => {
+  });
   }
 
   toggleFavourited() {
