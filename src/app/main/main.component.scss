@@ -11,9 +11,9 @@
 .c2{
     margin-right: 10%;
 }
-#lyrics::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3); border-radius: 10px; background-color:#F5F5F5;}
-#lyrics::-webkit-scrollbar{width: 12px; background-color: #F5F5F5};
-#lyrics::-webkit-scrollbar-thumb{border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); background-color: #555;}
+#lyricsScroll::-webkit-scrollbar-track{-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3); border-radius: 10px; background-color:#F5F5F5;}
+#lyricsScroll::-webkit-scrollbar{width: 12px; background-color: #F5F5F5};
+#lyricsScroll::-webkit-scrollbar-thumb{border-radius: 10px; -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); background-color: #555;}
 #please{
     margin-left: auto;
     margin-right: auto;
@@ -22,7 +22,7 @@
 .tit{
     padding-bottom: 1%;
 }
-#lyrics{
+#lyricsScroll{
     overflow-y: scroll;
     height: 550px;    
     

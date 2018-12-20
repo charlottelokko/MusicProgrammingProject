@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../services/spotify.service';
 import * as $ from 'jquery';
-import { GeniusService } from '../services/genius.service';
+// import { GeniusService } from '../services/genius.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -11,7 +11,7 @@ import { GeniusService } from '../services/genius.service';
 export class NavbarComponent implements OnInit {
   searchStr: string;
 
-  constructor(private _spotifyService: SpotifyService, private _geniusService: GeniusService) {
+  constructor(private _spotifyService: SpotifyService) {
     $(document).ready(() => {
       $('.dropdown').keyup(function(event) {
         // preventing default behaviour of bootstrap
@@ -52,7 +52,7 @@ export class NavbarComponent implements OnInit {
             for (let j = 0; j < artistsAmount; j++) {
               // console.log((res as any).tracks.items[i].artists[j].name);
               if (j > 0) {
-              artists += (', ' + (res as any).tracks.items[i].artists[j].name);
+                artists += ', ' + (res as any).tracks.items[i].artists[j].name;
               }
               // tslint:disable-next-line:one-line
               else {
@@ -74,12 +74,20 @@ export class NavbarComponent implements OnInit {
             p1.append(p2);
             atag.appendChild(p1);
             // atag.innerHTML = (track + ' : ' + artists);
-            atag.setAttribute('routerLink', 'main#' +  trackId);
+            atag.setAttribute(
+              'href',
+              'main#' +
+                trackId +
+                '+' +
+                encodeURIComponent(track) +
+                '+' +
+                encodeURIComponent(artists)
+            );
             atag.setAttribute('class', 'dropdown-item overflow');
             imageDiv.setAttribute('class', 'imageContainer');
             imageDiv.setAttribute('src', image);
             // divy.appendChild(atag);
-           // element.appendChild(image);
+            // element.appendChild(image);
             element.appendChild(imageDiv);
             element.appendChild(atag);
           }
@@ -95,11 +103,10 @@ export class NavbarComponent implements OnInit {
       element.innerHTML = ' ';
     }
   }
-  searchLyrics(searchtr) {
-    console.log(this.searchStr);
-    if (this.searchStr !== '') {
-      this._geniusService.searchLyrics(this.searchStr);
-    }
-  }
+  // searchLyrics(searchtr) {
+  //   console.log(this.searchStr);
+  //   if (this.searchStr !== '') {
+  //     this._geniusService.searchLyrics(this.searchStr);
+  //   }
+  // }
 }
-

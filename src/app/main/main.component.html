@@ -1,7 +1,7 @@
 <div class="card-deck">
   <div class="card c1">
     <div class="card-body">
-      <h4 class="card-title">Listen</h4>
+      <h4 class="card-title tit">Listen</h4>
       <iframe
         [src]="
           sanitizer.bypassSecurityTrustResourceUrl(
@@ -18,20 +18,9 @@
     </div>
   </div>
   <div class="card c2">
-    <div id="lyrics" class="card-body "><h4 class="card-title">Lyrics</h4></div>
+    <div id="lyricsScroll" class="card-body ">
+      <h4 class="card-title">Lyrics</h4>
+      <div id="lyrics"></div>
+    </div>
   </div>
 </div>
-
-<!-- <div class = "card-group" >
-    <div class = "card">
-        <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl('https://open.spotify.com/embed/track/' + this.songId)" id="please" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-    </div>
-
-   <div class = "col-sm-4-scroll">
-        <div class = "card">
-            <div class = "card-body" id="lyrics" class="primary row no-gutters" style= "overflow-y: scroll; height: 440px;"></div>
-        </div>
-    </div>
-</div> -->
-
-<!-- src="'https://open.spotify.com/embed/track/' + songId" -->
