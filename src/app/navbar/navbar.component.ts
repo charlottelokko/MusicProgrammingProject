@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit {
             p1.append(p2);
             atag.appendChild(p1);
             // atag.innerHTML = (track + ' : ' + artists);
-            atag.setAttribute('routerLink', 'main#' +  trackId);
+            atag.setAttribute('href', 'main#' +  trackId);
             atag.setAttribute('class', 'dropdown-item overflow');
             imageDiv.setAttribute('class', 'imageContainer');
             imageDiv.setAttribute('src', image);
