@@ -1,14 +1,22 @@
-<div class="jumbotron">
-    <h3 class="display-3">Listen & Lyrics: It's all in the name</h3>
-    <p class="lead">Wanna sing? Or read along to your favourite tracks!?</p>
-    <hr class="my-4">
-    <p>Search up the top and then look below!</p>
-    
-  
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Listen</h4>
+            <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl('https://open.spotify.com/embed/track/' + this.songId)" id="please" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Lyrics</h4>
+ 
+        </div>
+    </div>
 </div>
 
-<div class = "card-group" > 
+
+
+<!-- <div class = "card-group" > 
     <div class = "card">
         <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl('https://open.spotify.com/embed/track/' + this.songId)" id="please" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>       
     </div>
@@ -18,7 +26,7 @@
             <div class = "card-body" id="lyrics" class="primary row no-gutters" style= "overflow-y: scroll; height: 440px;"></div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 
