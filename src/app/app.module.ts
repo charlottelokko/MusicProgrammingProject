@@ -34,6 +34,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 
 // Import for Angular Material Icons
 import { MatIconModule } from '@angular/material';
+import { AboutComponent } from './about/about.component';
 const appRoutes: Routes = [
   {
     path: 'home',
@@ -49,6 +50,11 @@ const appRoutes: Routes = [
     path: 'favourites',
     component: FavouritesComponent,
     data: { title: 'Favourites' },
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
+    data: { title: 'About' },
   },
   {
     path: '',
@@ -68,6 +74,7 @@ const appRoutes: Routes = [
     FavouritesComponent,
     MainComponent,
     UserProfileComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
