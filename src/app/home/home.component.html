@@ -6,16 +6,14 @@
         <p>Search up the top and then look below!</p>
     </div>
 </div>
- <div>
-  <div class = "card-group" > 
-        <div class="card mb-3" style="width: 20rem;"  *ngFor="let album of albumsobj | slice:0:10;">
-         <img [src]="album.track.album.images[1].url" class="w-100 card-img-top"/>
-        <div class="card-body">
-            <h4 class="card-title">Title: {{album.track.name}}</h4>
-            <h4 class="card-title">Artist: {{album.track.artists[0].name}}</h4>
-            <h4 class="card-title">Album: {{album.track.album.name}}</h4>
+  <div class = "row no-gutters" > 
+        <div class="card mb-3" style="width: 20rem;"  *ngFor="let album of albumsobj | slice:0:50;">
+            <img [src]="album.track.album.images[1].url" class="w-100 "/>
+            <div class="card-body">
+                <h4 class="card-title">Title: {{album.track.name}}</h4>
+                <h4 class="card-title">Artist: {{album.track.artists[0].name}}</h4>
+                <h4 class="card-title">Album: {{album.track.album.name}}</h4>
 
+            </div>
     </div>
-    </div>
-</div>
 </div>

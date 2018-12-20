@@ -1,0 +1,28 @@
+.card{
+margin: 1rem !important;// height: 30rem;
+// overflow: initial;
+// word-wrap: break-word;
+}
+.no-gutters {
+    margin-left: 0;
+    margin-right: 0;
+  }
+.card-body{
+    padding: 0;
+    width: 100%;
+    height: 318px;
+    overflow-y: hidden;
+    overflow-x:auto;
+
+}
+.card-group{
+    width: 100vw;
+    height: auto;
+    
+}
+.card-title{
+    // width: 13rem;
+height: auto;
+word-wrap: break-word;
+
+}

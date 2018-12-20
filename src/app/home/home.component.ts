@@ -25,16 +25,11 @@ export class HomeComponent implements OnInit {
                       res => {
                     this.albumsobj = (res as any).tracks.items;
                     console.log(this.albumsobj);
-<<<<<<< HEAD
                    
                         
                       });
         }, 3000)
        
-=======
-                    });
-        }, 2000);
->>>>>>> 33ace7c11c19016af45743098283f2b058ba175e
     });
    }
 
