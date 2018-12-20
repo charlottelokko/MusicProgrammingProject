@@ -86,7 +86,7 @@ export class MainComponent implements OnInit {
       const trackString = fragment.split('+');
       this.songId = trackString[0];
       const lyricsString = trackString[1] + ' ' + trackString[2];
-          console.log('lyricsString:' + lyricsString);
+        console.log('lyricsString:' + lyricsString);
         console.log(this._geniusService.searchLyrics(lyricsString));
     });
   }
