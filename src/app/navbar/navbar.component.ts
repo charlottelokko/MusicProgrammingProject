@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../services/spotify.service';
 import * as $ from 'jquery';
+import { AuthService } from '../core/auth.service';
 // import { GeniusService } from '../services/genius.service';
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ import * as $ from 'jquery';
 export class NavbarComponent implements OnInit {
   searchStr: string;
 
-  constructor(private _spotifyService: SpotifyService) {
+  constructor(private _spotifyService: SpotifyService, public auth: AuthService) {
     $(document).ready(() => {
       $('.dropdown').keyup(function(event) {
         // preventing default behaviour of bootstrap
