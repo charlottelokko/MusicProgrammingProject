@@ -16,6 +16,7 @@ import {
 } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { PlayedTrack } from '../core/user-type';
 
 export interface Data {
   access_token: string;
@@ -56,16 +57,26 @@ export class SpotifyService {
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
   }
-  searchRecomendations(str: string) {
-    // console.log('Recommendation String: ' + str);
+  searchRecomendations(array: Array<PlayedTrack>) {
+    array = array.sort((a, b) =>
+      a.favourites.rating > b.favourites.rating
+        ? 1
+        : b.favourites.rating > a.favourites.rating
+        ? -1
+        : 0
+    );
+    const strArray = array.map(track => track.id);
+    const str = strArray
+      .reverse()
+      .slice(0, 5)
+      .toString(); // return the first five elements.toString();
+    console.log('Recommendation String: ' + str);
     const headers = new HttpHeaders().set(
       'Authorization',
       'Bearer ' + this.access_token
     );
     this.searchUrl =
-      'https://api.spotify.com/v1/recommendations?limit=5&seed_tracks=' +
-      encodeURIComponent('0c6xIDDpzE81m2q797ordA');
-    // because of this changes to map .json() doesn't exist anymore
+      'https://api.spotify.com/v1/recommendations?limit=20&seed_tracks=' + str;
     // return this._http.get(this.searchUrl).map(res => res.json());
     return this._http.get(this.searchUrl, { headers: headers });
   }

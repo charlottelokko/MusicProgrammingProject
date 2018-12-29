@@ -4,7 +4,7 @@
       <div
         class="card border-primary mb-3"
         [id]="track.id"
-        *ngFor="let track of favouriteTracks"
+        *ngFor="let track of favouriteTracks.slice().reverse()"
         [hidden]="!track.favourites.favourited"
       >
         <div class="card-header">
@@ -123,7 +123,10 @@
             User<br />
             Info
           </label>
-          <label class="btn btn-primary" (click)="this.playTrack(track.id)">
+          <label
+            class="btn btn-primary"
+            (click)="this.playTrack(track.id, track.title, track.artists[0])"
+          >
             <input
               type="radio"
               name="options"
@@ -138,21 +141,38 @@
     </div>
   </div>
   <div class="card col-md-4 recommendations">
-    <h2><b>Recommendations</b></h2>
-    <div
-      *ngFor="let track of recommendations"
-      class="card text-white bg-primary recommendation"
-    >
-      <div class="card-body">
-        <h4 class="card-title">{{ track.name }}</h4>
-        <h6 class="card-subtitle mb-2 text-muted">
-          <span *ngFor="let artist of track.artists; let i = index">{{
-            i == 0 ? artist.name : ', ' + artist.name
-          }}</span>
-        </h6>
-        <button (click)="this.playTrack(track.id)" class="btn btn-primary">
-          Play Track
-        </button>
+    <h4><b>Recommendations</b></h4>
+    <div id="recommendationScroll">
+      <div
+        *ngFor="let track of recommendations"
+        class="card text-white bg-primary recommendation"
+      >
+        <div class="card-body">
+          <h5
+            class="card-title"
+            data-toggle="tooltip"
+            data-placement="left"
+            [attr.title]="track.name"
+          >
+            {{ track.name }}
+          </h5>
+          <h6
+            class="card-subtitle mb-2 text-muted"
+            data-toggle="tooltip"
+            data-placement="left"
+            [attr.title]="this.artists2String(track.artists)"
+          >
+            {{ this.artists2String(track.artists) }}
+          </h6>
+          <button
+            (click)="
+              this.playTrack(track.id, track.name, track.artists[0].name)
+            "
+            class="btn btn-secondary"
+          >
+            Play Track
+          </button>
+        </div>
       </div>
     </div>
   </div>

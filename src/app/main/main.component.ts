@@ -7,6 +7,7 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
+import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { SpotifyService } from '../services/spotify.service';
 import { GeniusService } from '../services/genius.service';
@@ -25,8 +26,9 @@ export class MainComponent implements OnInit {
   userData: any;
   songId: string = window.location.hash;
   url: string;
-
-  // tslint:disable-next-line:max-line-length
+  favourite: boolean;
+  playCheck = false;
+  playCountInterval = null;
   constructor(
     public auth: AuthService,
     private afs: AngularFirestore,
@@ -35,74 +37,145 @@ export class MainComponent implements OnInit {
     private _geniusService: GeniusService,
     public sanitizer: DomSanitizer
   ) {
-    auth.user.subscribe(_user => {
+    $(document).ready(() => {
+      ($('[data-toggle="tooltip"]') as any).tooltip();
+      // when the favourite icon is clicked
+      $('#favourite').click(() => {
+        if (this.songId !== '') {
+          this.userData.playedTracks.map(playedTrack => {
+            if (playedTrack.id === this.songId) {
+              playedTrack.favourites.favourited = !playedTrack.favourites
+                .favourited;
+              this.favourite = playedTrack.favourites.favourited;
+            }
+          });
+          const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+            `users/${this.userData.uid}`
+          );
+          userRef.update({ playedTracks: this.userData.playedTracks });
+        } else {
+          console.log("Song doesn't exist");
+        }
+      });
+    });
+  }
+  incrementPlayCount() {
+    if (!this.playCheck) {
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+        `users/${this.userData.uid}`
+      );
+      this.userData.playedTracks.forEach((playedTrack, i) => {
+        if (playedTrack.id === this.songId) {
+          this.userData.playedTracks[i].favourites.play_count += 1;
+          // console.log(this.userData.playedTracks[i].favourites.play_count);
+        }
+      });
+      userRef.update({
+        playedTracks: this.userData.playedTracks,
+      });
+      this.playCheck = true;
+    }
+  }
+  updateFavouriteSettings() {
+    this.auth.user.subscribe(_user => {
       let trackExists = false;
-      console.log('User: ' + JSON.stringify(_user));
-      this.userData = _user;
-      console.log('Played Tracks: ' + this.userData.playedTracks);
-      if (this.userData.playedTracks !== undefined) {
-        this.userData.playedTracks.map(playedTrack => {
-          if (playedTrack.id === this.songId) {
-            trackExists = true;
+      // If the user is logged in
+      if (_user !== null) {
+        // stores the users data
+        this.userData = _user;
+        // If the user has played a track before
+        if (this.userData.playedTracks !== undefined) {
+          this.userData.playedTracks.map(playedTrack => {
+            if (playedTrack.id === this.songId) {
+              trackExists = true;
+            }
+          });
+          // If this track hasn't already been added to the users playedTracks
+          if (!trackExists) {
+            console.log(
+              "You've never played this track with this account before!"
+            );
+            let trackData: any;
+            this._spotifyService.getTrackObject(this.songId).subscribe(res => {
+              trackData = res;
+              // console.log('TrackData: ' + JSON.stringify(trackData));
+              const data = {
+                id: this.songId,
+                title: trackData.name,
+                artists: trackData.artists.map(artist => artist.name),
+                album_name: trackData.album.name,
+                released: trackData.album.release_date,
+                duration: trackData.duration_ms,
+                favourites: {
+                  rating: 0,
+                  favourited: false,
+                  play_count: 1,
+                },
+                image_url: trackData.album.images.map(image => image.url),
+              };
+              const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+                `users/${this.userData.uid}`
+              );
+              userRef.update({
+                playedTracks: firebase.firestore.FieldValue.arrayUnion(data),
+              });
+              this.favourite = data.favourites.favourited;
+            });
+          } else {
+            this.userData.playedTracks.map(playedTrack => {
+              if (playedTrack.id === this.songId) {
+                this.favourite = playedTrack.favourites.favourited;
+              }
+            });
+            console.log("You've played this track with this account before!");
           }
-        });
-      }
-      // if (!trackExists) {
-      //   let trackData: any;
-      //   const trackDataObj: any = _spotifyService
-      //     .getTrackObject(this.songId)
-      //     .subscribe(res => {
-      //       trackData = res;
-
-      //       console.log(trackData);
-      //       const data = {
-      //         id: this.songId,
-      //         title: trackData.name,
-      //         artists: trackData.artists.map(artist => artist.name),
-      //         album_name: trackData.album.name,
-      //         released: trackData.album.release_date,
-      //         duration: trackData.duration_ms,
-      //         favourites: {
-      //           rating: 0,
-      //           favourited: false,
-      //           play_count: 1,
-      //         },
-      //         image_url: trackData.images,
-      //       };
-      //       const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      //         `users/${_user.uid}`
-      //       );
-      //       this.userData.playedTrack.push(data);
-      //       userRef.set(this.userData, {
-      //         merge: true,
-      //       });
-      //     });
-      // }
-    });
-    $(document).ready(() => {});
-
-    // this.url = this.sanitizer.bypassSecurityTrustUrl('https://open.spotify.com/embed/track/' + this.songId);
-    // console.log(this.url);
-  }
-
-  toggleFavourited() {
-    this.userData.playedTracks.map(playedTrack => {
-      if (playedTrack.id === this.songId) {
-        playedTrack.favourites.favourited = !playedTrack.favourites.favourited;
+        } else {
+          let trackData: any;
+          this._spotifyService.getTrackObject(this.songId).subscribe(res => {
+            trackData = res;
+            const data: PlayedTrack = {
+              id: this.songId,
+              title: trackData.name,
+              artists: trackData.artists.map(artist => artist.name),
+              album_name: trackData.album.name,
+              released: trackData.album.release_date,
+              duration: trackData.duration_ms,
+              favourites: {
+                rating: 0,
+                favourited: false,
+                play_count: 1,
+              },
+              image_url: trackData.album.images.map(image => image.url),
+            };
+            const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+              `users/${this.userData.uid}`
+            );
+            userRef.set({ playedTracks: [data] }, { merge: true });
+            this.favourite = data.favourites.favourited;
+          });
+        }
+        this.incrementPlayCount();
       }
     });
   }
+
   ngOnInit() {
     // Makes songId = the hash of the URL e.g #123 = 123
     this.route.fragment.subscribe(fragment => {
-      const trackString = fragment.split('+');
-      this.songId = trackString[0];
-      const lyricsString =
+      if (fragment != null) {
+        this.playCheck = false;
+        const trackString = fragment.split('+');
+        this.songId = trackString[0];
+        const lyricsString =
         decodeURIComponent(trackString[1]) +
         ' ' +
         decodeURIComponent(trackString[2]);
-      console.log('lyricsString:' + lyricsString);
-      console.log(this._geniusService.searchLyrics(lyricsString));
+        console.log('lyricsString:' + lyricsString);
+        this._geniusService.searchLyrics(lyricsString);
+        this.updateFavouriteSettings();
+      } else {
+        console.log('Song does not exist!');
+      }
     });
   }
 }

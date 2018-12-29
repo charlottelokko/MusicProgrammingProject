@@ -6,9 +6,8 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
-import { PlayedTrack } from '../core/user-type';
-import * as $ from 'jquery';
-import { Observable } from 'rxjs';
+import firebase from 'firebase/app';
+import { User, PlayedTrack } from '../core/user-type';
 
 @Component({
   selector: 'app-favourites',
@@ -16,120 +15,70 @@ import { Observable } from 'rxjs';
   styleUrls: ['./favourites.component.scss'],
 })
 export class FavouritesComponent implements OnInit {
-  favouriteTracks: Array<PlayedTrack>;
+  favouriteTracks: Array<PlayedTrack> = [];
   recommendations: Array<any>;
-  user = this.auth.user;
   searchStr: string;
-
+  userData: User;
   constructor(
     private afs: AngularFirestore,
     private _spotifyService: SpotifyService,
     public auth: AuthService
   ) {
-    const track1: PlayedTrack = {
-      id: '1',
-      title: 'Rock With You',
-      artists: ['Michael Jackson'],
-      album_name: 'Off The Wall',
-      released: '1979',
-      duration: 220 * 1000,
-      favourites: {
-        rating: 5,
-        favourited: true,
-        play_count: 1,
-      },
-      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
-    };
-    const track2: PlayedTrack = {
-      id: '2',
-      title: 'Happier',
-      artists: ['Marshmellow', 'Bastille'],
-      album_name: 'N/A',
-      released: '2018',
-      duration: 214 * 1000,
-      favourites: {
-        rating: 4,
-        favourited: true,
-        play_count: 1,
-      },
-      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
-    };
-    const track3: PlayedTrack = {
-      id: '3',
-      title: 'Mrs. Robinson',
-      artists: ['Simon & Garfunkel'],
-      album_name: 'The Graduate',
-      released: '1968',
-      duration: 242 * 1000,
-      favourites: {
-        rating: 4,
-        favourited: true,
-        play_count: 1,
-      },
-      image_url: ['https://dummyimage.com/300x300/000000/fff.jpg'],
-    };
-    this.favouriteTracks = [track1, track2, track3];
+    this.loadFavouriteTracks();
     // reference to firestore collection
     const dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
     const data = dataDoc.valueChanges(); // Observable of Secret Data
     data.subscribe(
-      e => {
-        _spotifyService
-          .searchRecomendations(
-            this.favouriteTracks.map(track => track.id).toString()
-          )
-          .subscribe(recommendations => {
-            this.recommendations = (recommendations as any).tracks;
-            console.log(
-              'Recommendations: ' +
-                this.recommendations.map(track =>
-                  JSON.stringify((track as any).artists)
-                )
-            );
-          });
-      },
+      _e => {},
       err => {
         console.log('Error:' + err);
       }
     );
-    $('.track-info, .user-info').ready(() => {
-      $('.track-info, .user-info').hide();
-    });
-    $(document).ready(() => {
-      $('.rating mat-icon').hover(
-        e => {
-          console.log('hovered: ' + $(e.currentTarget).attr('id'));
-          $(e.currentTarget).addClass('hover');
-          $(e.currentTarget)
-            .prevUntil('b')
-            .addClass('hover');
-        },
-        e => {
-          $(e.currentTarget).removeClass('hover');
-          $(e.currentTarget)
-            .prevUntil('b')
-            .removeClass('hover');
-        }
-      );
-      $('.rating mat-icon').click(e => {
-        console.log('rated: ' + $(e.currentTarget).attr('id'));
-        // reset the ratings of the stars
-        $(e.currentTarget)
-          .siblings('mat-icon')
-          .removeClass('rated');
-        $(e.currentTarget)
-          .siblings('mat-icon')
-          .html('star_border');
-
-        // display the correct star rating
-        $(e.currentTarget).addClass('rated');
-        $(e.currentTarget)
-          .prevUntil('b')
-          .addClass('rated');
-        $(e.currentTarget).html('star');
-        $(e.currentTarget)
-          .prevUntil('b')
-          .html('star');
+  }
+  loadFavouriteTracks() {
+    this.auth.user.subscribe(_user => {
+      // If the user is logged in
+      if (_user !== null) {
+        // stores the users data
+        this.userData = _user;
+        const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+          `users/${this.userData.uid}`
+        );
+        this.favouriteTracks = this.userData.playedTracks.filter(track => {
+          return track.favourites.favourited;
+        });
+        this._spotifyService
+          .searchRecomendations(this.favouriteTracks)
+          .subscribe(recommendations => {
+            this.recommendations = (recommendations as any).tracks;
+            // console.log(
+            //   'Recommendations: ' +
+            //     this.recommendations.map(track =>
+            //       JSON.stringify((track as any).artists)
+            //     )
+            // );
+          });
+      }
+      $('.track-info, .user-info').ready(() => {
+        $('.track-info, .user-info').hide();
+      });
+      $(document).ready(() => {
+        ($('[data-toggle="tooltip"]') as any).tooltip();
+        $('.rating mat-icon').hover(
+          e => {
+            // console.log('hovered: ' + $(e.currentTarget).attr('id'));
+            $(e.currentTarget).addClass('hover');
+            $(e.currentTarget)
+              .prevUntil('b')
+              .addClass('hover');
+          },
+          e => {
+            $(e.currentTarget).removeClass('hover');
+            $(e.currentTarget)
+              .prevUntil('b')
+              .removeClass('hover');
+          }
+        );
       });
     });
   }
@@ -140,24 +89,60 @@ export class FavouritesComponent implements OnInit {
     const track_id = ratingEl[2];
     const rating = parseInt(ratingEl[1], 10);
     console.log(ratingEl.toString());
-    const index = this.favouriteTracks.findIndex(obj => obj.id === track_id);
-    this.favouriteTracks[index].favourites.rating = rating;
-    return rating;
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${this.userData.uid}`
+    );
+    this.userData.playedTracks.forEach((playedTrack, i) => {
+      if (playedTrack.id === track_id) {
+        this.userData.playedTracks[i].favourites.rating = rating;
+      }
+    });
+    userRef
+      .update({
+        playedTracks: this.userData.playedTracks,
+      })
+      .then(() => {
+        this.switchToUserInfo(track_id);
+      });
   }
   setRating(id) {
-    const track_id = id;
-    const index = this.favouriteTracks.findIndex(obj => obj.id === track_id);
+    const index = this.favouriteTracks.findIndex(obj => obj.id === id);
     return this.favouriteTracks[index].favourites.rating;
   }
   setFavourited(id) {
-    const track_id = id;
-    const index = this.favouriteTracks.findIndex(obj => obj.id === track_id);
+    const index = this.favouriteTracks.findIndex(obj => obj.id === id);
     const favourited = this.favouriteTracks[index].favourites.favourited;
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${this.userData.uid}`
+    );
+    // removes the current favourited value of the specified track
+    userRef.update({
+      playedTracks: firebase.firestore.FieldValue.arrayRemove(
+        this.favouriteTracks[index]
+      ),
+    });
     this.favouriteTracks[index].favourites.favourited = favourited
       ? false
       : true;
+    // replaces the favourited value of this track with the new one
+    userRef.update({
+      playedTracks: firebase.firestore.FieldValue.arrayUnion(
+        this.favouriteTracks[index]
+      ),
+    });
   }
 
+  artists2String(artists) {
+    let result = '';
+    artists.forEach((artist, i) => {
+      if (i === 0) {
+        result += artist.name;
+      } else {
+        result += ', ' + artist.name;
+      }
+    });
+    return result;
+  }
   switchToAlbumCover(id) {
     $('#' + id + '.track-info, #' + id + '.user-info').hide();
     $('#' + id + '.album-cover').show();
@@ -170,8 +155,14 @@ export class FavouritesComponent implements OnInit {
     $('#' + id + '.user-info, #' + id + '.album-cover').hide();
     $('#' + id + '.track-info').show();
   }
-  playTrack(id) {
-    window.location.href = 'main#' + id;
+  playTrack(id, name, artists) {
+    window.location.href =
+      'main#' +
+      id +
+      '+' +
+      encodeURIComponent(name) +
+      '+' +
+      encodeURIComponent(artists);
   }
   millisToMinutesAndSeconds(millis) {
     const seconds = Math.floor((millis / 1000) % 60);

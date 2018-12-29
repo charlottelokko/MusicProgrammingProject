@@ -8,7 +8,7 @@ import {
   AngularFirestoreCollection,
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import * as $ from 'jquery';
 @Component({
   selector: 'app-home',
@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
           .subscribe(res => {
             this.albumsobj = (res as any).tracks.items;
             console.log(this.albumsobj);
+            displayplaylist.unsubscribe();
           });
       },
       err => {

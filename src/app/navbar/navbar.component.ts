@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../services/spotify.service';
+import { AuthService } from '../core/auth.service';
 import * as $ from 'jquery';
 // import { GeniusService } from '../services/genius.service';
 @Component({
@@ -10,15 +11,16 @@ import * as $ from 'jquery';
 })
 export class NavbarComponent implements OnInit {
   searchStr: string;
+  user: any;
 
-  constructor(private _spotifyService: SpotifyService) {
-    $(document).ready(() => {
-      $('.dropdown').keyup(function(event) {
-        // preventing default behaviour of bootstrap
-        event.stopPropagation();
-        ($('.dropdown-menu') as any).dropdown().toggle();
-      });
+  constructor(
+    private _spotifyService: SpotifyService,
+    public auth: AuthService
+  ) {
+    this.auth.user.subscribe(_user => {
+      this.user = _user;
     });
+    $(document).ready(() => {});
   }
 
   ngOnInit() {}
@@ -41,7 +43,7 @@ export class NavbarComponent implements OnInit {
           element.innerHTML = ' ';
           for (let i = 0; i < 10; i++) {
             trackId = (res as any).tracks.items[i].id;
-            // console.log((res as any).tracks.items[i].id);
+            // console.log('search tracks:' + (res as any).tracks.items[i].id);
             artists = ' ';
             const artistsAmount = (res as any).tracks.items[i].artists.length;
             // console.log((res as any).tracks.items[i].name);

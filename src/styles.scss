@@ -11,4 +11,7 @@ body {
       cursor: pointer;
     }
   }
+  .nav-link.active {
+    color: #375a7f !important;
+  }
 }
