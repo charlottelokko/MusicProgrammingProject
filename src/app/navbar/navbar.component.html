@@ -40,12 +40,32 @@
         </div>
       <!-- <button class="btn btn-secondary my-2 my-sm-0" type="submit"> Search </button> -->
     </form>
+  <div *ngIf="auth.user | async; then authenticated else guest">
+        <!-- template will replace this div -->
 
+</div>
+<ng-template #guest>
+<div class= "wrapper">
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link"  style="cursor:pointer" data-toggle="modal" data-target="#exampleModal">Log In</a>
       </li>
     </ul>
+    </div>
+    </ng-template>
+    
+    <ng-template #authenticated>
+    <div *ngIf="auth.user | async as user">
+        
+<ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link"  style="cursor:pointer" data-toggle="modal" data-target="#exampleModal"> {{ user.displayName }}</a>
+      </li>
+    </ul>
+        <!-- <img  [src]="user.photoURL"> -->
+        
+    </div>
+</ng-template>
 
 
   </div>
@@ -69,6 +89,7 @@
     </div>
   </div>
 </div>
+
 
 
 

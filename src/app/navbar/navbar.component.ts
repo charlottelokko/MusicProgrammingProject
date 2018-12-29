@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../services/spotify.service';
-import { AuthService } from '../core/auth.service';
 import * as $ from 'jquery';
+import { AuthService } from '../core/auth.service';
 // import { GeniusService } from '../services/genius.service';
 @Component({
   selector: 'app-navbar',
