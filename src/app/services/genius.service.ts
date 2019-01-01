@@ -66,7 +66,7 @@ export class GeniusService {
       .then(
         async res => {
           await $.getJSON(
-            'http://api.allorigins.ml/get?url=' +
+            'https://api.allorigins.ml/get?url=' +
               res.response.hits[0].result.url +
               '&callback=?',
             data => {

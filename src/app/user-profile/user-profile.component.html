@@ -1,26 +1,26 @@
-<div *ngIf="auth.user | async; then authenticated else guest">
-        <!-- template will replace this div -->
+<div *ngIf="(auth.user | async); then authenticated; else guest">
+  <!-- template will replace this div -->
 </div>
-
 
 <!-- User NOT logged in -->
 <ng-template #guest>
-<div class= "wrapper">
-    <button class= "Googlebut" (click)="auth.googleLogin()">
-        <img src ="http://www.vitascientia.lt/assets/google.png" class = "loginbutton" >
-        <!-- <fa-icon [icon]="['fab', 'google']"></fa-icon> Connect Google -->
+  <div class="wrapper">
+    <button class="Googlebut" (click)="auth.googleLogin()">
+      <img src="../../assets/img/google.png" class="loginbutton" />
+      <!-- <fa-icon [icon]="['fab', 'google']"></fa-icon> Connect Google -->
     </button>
-    </div>
+  </div>
 </ng-template>
-
 
 <!-- User logged in -->
 <ng-template #authenticated>
-    <div *ngIf="auth.user | async as user">
-        <img class="center" src={{user.photoURL}}>
-        <h3 style="text-align: center">Hiya, {{ user.displayName }}</h3>
-        <h4 style="text-align: center">Email: {{user.email}}</h4>
-        <!-- <img  [src]="user.photoURL"> -->
-        <button class="btn btn-primary center" (click)="auth.signOut()">Logout</button>
-    </div>
+  <div *ngIf="(auth.user | async) as user">
+    <img class="center" src="{{ user.photoURL }}" />
+    <h3 style="text-align: center">Hiya, {{ user.displayName }}</h3>
+    <h4 style="text-align: center">Email: {{ user.email }}</h4>
+    <!-- <img  [src]="user.photoURL"> -->
+    <button class="btn btn-primary center" (click)="auth.signOut()">
+      Logout
+    </button>
+  </div>
 </ng-template>
