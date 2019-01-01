@@ -167,11 +167,13 @@ export class MainComponent implements OnInit {
         const trackString = fragment.split('+');
         this.songId = trackString[0];
         const lyricsString =
-        decodeURIComponent(trackString[1]) +
-        ' ' +
-        decodeURIComponent(trackString[2]);
+          decodeURIComponent(trackString[1]) +
+          ' ' +
+          decodeURIComponent(trackString[2]);
+        const title = decodeURIComponent(trackString[1]);
+        const artist = decodeURIComponent(trackString[2]);
         console.log('lyricsString:' + lyricsString);
-        this._geniusService.searchLyrics(lyricsString);
+        this._geniusService.searchLyrics(title, artist);
         this.updateFavouriteSettings();
       } else {
         console.log('Song does not exist!');

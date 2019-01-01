@@ -29,23 +29,28 @@ export class GeniusService {
   private access_token: string;
   html: string;
   lyricHTML: string;
-   constructor(private afs: AngularFirestore) {
-  //   // reference to firestore collection
-  //   this.dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
-  //   this.data = this.dataDoc.valueChanges(); // Observable of Secret Data
-  //   this.data.subscribe(
-  //     e => {
-  //       // stores access_token from firestore
-  //       this.access_token = e.genius_access_token;
-  //       console.log(this.access_token);
-  //     },
-  //     err => {
-  //       console.log('Error:' + err);
-  //     }
-  //   );
+  constructor(private afs: AngularFirestore) {
+    //   // reference to firestore collection
+    //   this.dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
+    //   this.data = this.dataDoc.valueChanges(); // Observable of Secret Data
+    //   this.data.subscribe(
+    //     e => {
+    //       // stores access_token from firestore
+    //       this.access_token = e.genius_access_token;
+    //       console.log(this.access_token);
+    //     },
+    //     err => {
+    //       console.log('Error:' + err);
+    //     }
+    //   );
   }
 
-  searchLyrics(str: string) {
+  searchLyrics(title: string, artist: string) {
+    title = title.replace(/ \(.*?\)/g, '');
+    title = title.split(' -')[0];
+    artist = artist.split(',')[0];
+    const query = title + ' - ' + artist;
+    console.log('Genius Lyrics Query: ' + query);
     // reference to firestore collection
     this.dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
     this.data = this.dataDoc.valueChanges(); // Observable of Secret Data
@@ -53,38 +58,38 @@ export class GeniusService {
       e => {
         // stores access_token from firestore
         this.access_token = e.genius_access_token;
-       // console.log(this.access_token);
+        // console.log(this.access_token);
         this.searchUrl =
-      'https://api.genius.com/search?access_token=' +
-      this.access_token +
-      '&q=' +
-      encodeURIComponent(str);
-    const reply = fetch(this.searchUrl).then(response => {
-      return response.json();
-    });
-    return reply
-      .then(
-        async res => {
-          await $.getJSON(
-            'https://api.allorigins.ml/get?url=' +
-              res.response.hits[0].result.url +
-              '&callback=?',
-            data => {
-              this.html = data.contents;
+          'https://api.genius.com/search?access_token=' +
+          this.access_token +
+          '&q=' +
+          encodeURIComponent(query);
+        const reply = fetch(this.searchUrl).then(response => {
+          return response.json();
+        });
+        return reply
+          .then(
+            async res => {
+              await $.getJSON(
+                'https://api.allorigins.ml/get?url=' +
+                  res.response.hits[0].result.url +
+                  '&callback=?',
+                data => {
+                  this.html = data.contents;
+                }
+              ).done(async data => {
+                // console.log(data.contents);
+                this.lyricHTML = this.extractLyrics(data.contents);
+                $('#lyrics').html(this.lyricHTML);
+              });
+            },
+            err => {
+              console.log('Error:' + err.toString());
             }
-          ).done(async data => {
-            // console.log(data.contents);
-            this.lyricHTML = this.extractLyrics(data.contents);
-            $('#lyrics').html(this.lyricHTML);
+          )
+          .catch(err => {
+            console.log('Error: ' + err);
           });
-        },
-        err => {
-          console.log('Error:' + err.toString());
-        }
-      )
-      .catch(err => {
-        console.log('Error: ' + err);
-      });
       },
       err => {
         console.log('Error:' + err);
