@@ -27,7 +27,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
-// Import for reponsive bootstrp layout.
+// Import for responsive bootstrap layout.
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { UserProfileComponent } from './user-profile/user-profile.component';
