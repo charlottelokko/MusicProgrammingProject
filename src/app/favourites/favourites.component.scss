@@ -2,41 +2,45 @@ mat-icon .material-icons {
   vertical-align: middle;
 }
 .no-gutters {
-  margin-left: 0;
   margin-right: 0;
+  margin-left: 0;
 }
 .container-fluid {
   padding: 20px;
   .col-md-8 {
     .card.border-primary {
-      margin: 1rem !important;
       width: 20rem;
+      margin: 1rem !important;
       .card-header {
-        white-space: nowrap;
         overflow: hidden;
+
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .card-body {
-        padding: 0;
         height: 318px;
-        .track-info,
-        .user-info {
-          display: table;
-          table-layout: fixed;
+        padding: 0;
+        .track-info, .user-info {
           position: relative;
           top: 50%;
-          -webkit-transform: translateY(-50%);
-          -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
-          padding: 1.25rem;
+
+          display: table;
           width: 100%;
           height: 100%;
+          padding: 1.25rem;
+
           text-align: center;
+
+          table-layout: fixed;
+          -webkit-transform: translateY(-50%);
+                  transform: translateY(-50%);
           p {
-            text-align: center;
             display: table-row;
+
+            text-align: center;
             span {
               display: table-cell;
+
               vertical-align: middle;
             }
           }
@@ -58,6 +62,7 @@ mat-icon .material-icons {
             }
             p {
               width: 100%;
+
               text-align: center;
             }
           }
@@ -70,40 +75,45 @@ mat-icon .material-icons {
   }
 
   .col-md-4.recommendations {
-    margin: 0 auto;
-    padding: 10px 0 0;
     height: 90vh !important;
+    padding: 10px 0 0;
+    margin: 0 auto;
     & > h4 {
       padding: 10px 0;
+
+      text-align: center;
+
       border-top: thin solid white;
       border-bottom: thin solid white;
-      text-align: center;
     }
     #recommendationScroll::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
       background-color: #f5f5f5;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+              box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+      border-radius: 10px;
     }
     #recommendationScroll::-webkit-scrollbar {
       width: 12px;
+
       background-color: #f5f5f5;
     }
     #recommendationScroll::-webkit-scrollbar-thumb {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
       background-color: #555;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+              box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+      border-radius: 10px;
     }
     #recommendationScroll {
-      overflow-y: scroll;
       height: 90vh;
+      overflow-y: scroll;
     }
     .recommendation {
-      h5,
-      h6 {
+      h5, h6 {
         width: 100%;
-        white-space: nowrap;
         overflow: hidden;
+
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }

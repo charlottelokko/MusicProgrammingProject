@@ -1,9 +1,9 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h3 class="display-3">Listen & Lyrics: It's all in the name</h3>
-    <p class="lead">Wanna sing? Or read along to your favourite tracks!?</p>
     <hr class="my-2" />
-    <p>Search up the top and then look below!</p>
+    <p class="lead">Wanna sing? Or read along to your favourite tracks!?</p>
+    <p>Search up at the top or look below!</p>
   </div>
 </div>
 <h3 style="text-align: center">Spotify's Current Top 50 Global Charts!</h3>
@@ -12,14 +12,7 @@
     <div>
       <img [src]="album.track.album.images[1].url" class="w-100 " />
       <div class="play-button">
-        <mat-icon
-          (click)="
-            this.playTrack(
-              album.track.id,
-              album.track.name,
-              album.track.artists[0].name
-            )
-          "
+        <mat-icon (click)="playTrack(album.track.id, album.track.name, album.track.artists[0].name)"
           >play_arrow</mat-icon
         >
       </div>

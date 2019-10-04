@@ -3,11 +3,8 @@ import { Router } from '@angular/router';
 
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from 'angularfire2/firestore';
-import { PlayedTrack, User, Favourites } from './user-type';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { User } from './user-type';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -16,23 +13,25 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  user: Observable<User>;
-
-  constructor(
-    private afAuth: AngularFireAuth,
-    private afs: AngularFirestore,
-    private router: Router
-  ) {
-    //// Get auth data, then get firestore user document || null
-    this.user = this.afAuth.authState.pipe(
+  user$: Observable<User>;
+  userRef: AngularFirestoreDocument;
+  currentUserDoc: User;
+  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
+    // Get auth data, then get firestore user document || null
+    this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+          this.userRef = this.afs.doc<User>(`users/${user.uid}`);
+          return this.userRef.valueChanges();
         } else {
           return of(null);
         }
       })
     );
+    this.user$.subscribe(userData => {
+      console.log('Test:', userData);
+      this.currentUserDoc = userData;
+    });
   }
 
   googleLogin() {
@@ -51,10 +50,8 @@ export class AuthService {
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
-    );
-    console.log(userRef);
+
+    console.log(this.userRef);
     const data: User = {
       uid: user.uid,
       email: user.email,
@@ -63,7 +60,7 @@ export class AuthService {
       playedTracks: null,
     };
 
-    return userRef.set(data, { merge: true });
+    return this.userRef.set(data, { merge: true });
   }
 
   signOut() {

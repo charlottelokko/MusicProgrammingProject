@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files*/
-@import url("https://bootswatch.com/4/darkly/bootstrap.min.css");
-
+@import '~bootswatch/dist/darkly/variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/darkly/bootswatch';
+@import '~material-design-icons/iconfont/material-icons.css';
 body {
   overflow-x: hidden;
 }
@@ -12,6 +14,6 @@ body {
     }
   }
   .nav-link.active {
-    color: #375a7f !important;
+    color: $green !important;
   }
 }

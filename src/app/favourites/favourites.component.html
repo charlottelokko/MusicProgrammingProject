@@ -19,9 +19,7 @@
               <span><b>Title:</b> {{ track.title }}</span>
             </p>
             <p class="card-text">
-              <span
-                ><b>Artist: </b>{{ strReplace(track.artists.toString()) }}</span
-              >
+              <span><b>Artist: </b>{{ strReplace(track.artists.toString()) }}</span>
             </p>
             <p class="card-text">
               <span><b>Album Name:</b> {{ track.album_name }} </span>
@@ -29,17 +27,13 @@
             <p class="card-text">
               <span><b>Released:</b> {{ track.released }}</span>
             </p>
-            <p class="card-text">
-              <b>Length:</b> {{ millisToMinutesAndSeconds(track.duration) }}
-            </p>
+            <p class="card-text"><b>Length:</b> {{ millisToMinutesAndSeconds(track.duration) }}</p>
           </div>
           <div [id]="track.id" class="user-info">
-            <p class="card-text">
-              <b>Play Count:</b> {{ track.favourites.play_count }}
-            </p>
+            <p class="card-text"><b>Play Count:</b> {{ track.favourites.play_count }}</p>
 
             <p class="favourite">
-              <mat-icon (click)="this.setFavourited(track.id)">{{
+              <mat-icon (click)="setFavourited(track.id)">{{
                 track.favourites.favourited ? 'favorite' : 'favorite_border'
               }}</mat-icon
               ><br />
@@ -50,89 +44,52 @@
               <mat-icon
                 [id]="'star-1-' + track.id"
                 [ngClass]="{ rated: track.favourites.rating >= 1 }"
-                (click)="this.updateRating($event)"
-                >{{ this.setRating(track.id) >= 1 ? 'star' : 'star_border' }}
+                (click)="updateRating($event)"
+                >{{ setRating(track.id) >= 1 ? 'star' : 'star_border' }}
               </mat-icon>
               <mat-icon
                 [id]="'star-2-' + track.id"
                 [ngClass]="{ rated: track.favourites.rating >= 2 }"
-                (click)="this.updateRating($event)"
-                >{{ this.setRating(track.id) >= 2 ? 'star' : 'star_border' }}
+                (click)="updateRating($event)"
+                >{{ setRating(track.id) >= 2 ? 'star' : 'star_border' }}
               </mat-icon>
               <mat-icon
                 [id]="'star-3-' + track.id"
                 [ngClass]="{ rated: track.favourites.rating >= 3 }"
-                (click)="this.updateRating($event)"
-                >{{ this.setRating(track.id) >= 3 ? 'star' : 'star_border' }}
+                (click)="updateRating($event)"
+                >{{ setRating(track.id) >= 3 ? 'star' : 'star_border' }}
               </mat-icon>
               <mat-icon
                 [id]="'star-4-' + track.id"
                 [ngClass]="{ rated: track.favourites.rating >= 4 }"
-                (click)="this.updateRating($event)"
-                >{{ this.setRating(track.id) >= 4 ? 'star' : 'star_border' }}
+                (click)="updateRating($event)"
+                >{{ setRating(track.id) >= 4 ? 'star' : 'star_border' }}
               </mat-icon>
               <mat-icon
                 [id]="'star-5-' + track.id"
                 [ngClass]="{ rated: track.favourites.rating >= 5 }"
-                (click)="this.updateRating($event)"
-                >{{ this.setRating(track.id) >= 5 ? 'star' : 'star_border' }}
+                (click)="updateRating($event)"
+                >{{ setRating(track.id) >= 5 ? 'star' : 'star_border' }}
               </mat-icon>
             </p>
           </div>
         </div>
-        <div
-          class="btn-group btn-group-toggle"
-          data-toggle="buttons"
-          style="width: 100%;"
-        >
-          <label
-            class="btn btn-primary active"
-            (click)="this.switchToAlbumCover(track.id)"
-          >
-            <input
-              type="radio"
-              name="options"
-              id="option1"
-              autocomplete="off"
-              checked=""
-            />
+        <div class="btn-group btn-group-toggle" data-toggle="buttons" style="width: 100%;">
+          <label class="btn btn-primary active" (click)="switchToAlbumCover(track.id)">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked="" />
             Album <br />Cover
           </label>
-          <label
-            class="btn btn-primary"
-            (click)="this.switchToTrackInfo(track.id)"
-          >
-            <input
-              type="radio"
-              name="options"
-              id="option1"
-              autocomplete="off"
-            />
+          <label class="btn btn-primary" (click)="switchToTrackInfo(track.id)">
+            <input type="radio" name="options" id="option1" autocomplete="off" />
             Track<br />Info
           </label>
-          <label
-            class="btn btn-primary"
-            (click)="this.switchToUserInfo(track.id)"
-          >
-            <input
-              type="radio"
-              name="options"
-              id="option2"
-              autocomplete="off"
-            />
+          <label class="btn btn-primary" (click)="switchToUserInfo(track.id)">
+            <input type="radio" name="options" id="option2" autocomplete="off" />
             User<br />
             Info
           </label>
-          <label
-            class="btn btn-primary"
-            (click)="this.playTrack(track.id, track.title, track.artists[0])"
-          >
-            <input
-              type="radio"
-              name="options"
-              id="option3"
-              autocomplete="off"
-            />
+          <label class="btn btn-primary" (click)="playTrack(track.id, track.title, track.artists[0])">
+            <input type="radio" name="options" id="option3" autocomplete="off" />
             Play<br />
             Track
           </label>
@@ -143,33 +100,20 @@
   <div class="card col-md-4 recommendations">
     <h4><b>Recommendations</b></h4>
     <div id="recommendationScroll">
-      <div
-        *ngFor="let track of recommendations"
-        class="card text-white bg-primary recommendation"
-      >
+      <div *ngFor="let track of recommendations" class="card text-white bg-primary recommendation">
         <div class="card-body">
-          <h5
-            class="card-title"
-            data-toggle="tooltip"
-            data-placement="left"
-            [attr.title]="track.name"
-          >
+          <h5 class="card-title" data-toggle="tooltip" data-placement="left" [attr.title]="track.name">
             {{ track.name }}
           </h5>
           <h6
             class="card-subtitle mb-2 text-muted"
             data-toggle="tooltip"
             data-placement="left"
-            [attr.title]="this.artists2String(track.artists)"
+            [attr.title]="artists2String(track.artists)"
           >
-            {{ this.artists2String(track.artists) }}
+            {{ artists2String(track.artists) }}
           </h6>
-          <button
-            (click)="
-              this.playTrack(track.id, track.name, track.artists[0].name)
-            "
-            class="btn btn-secondary"
-          >
+          <button (click)="playTrack(track.id, track.name, track.artists[0].name)" class="btn btn-secondary">
             Play Track
           </button>
         </div>

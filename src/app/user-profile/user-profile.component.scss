@@ -1,23 +1,25 @@
-.wrapper{
-    text-align: center;
-    border: transparent;
+.wrapper {
+  text-align: center;
+
+  border: transparent;
 }
 
-.Googlebut{
-    background: transparent;
-    color: transparent;
-    border: transparent;
-    position: flex;
-    top: 50%;
-   
+.Googlebut {
+  position: flex;
+  top: 50%;
+
+  color: transparent;
+
+  background: transparent;
+  border: transparent;
 }
-.loginbutton{
-    width:auto;
-    height:40px;
+.loginbutton {
+  width: auto;
+  height: 40px;
 }
 .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
+  display: block;
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+}

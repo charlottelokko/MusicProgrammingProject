@@ -2,30 +2,29 @@
   <div class="card c1">
     <div class="card-body">
       <h4 class="card-title title">Listen</h4>
-      <div id="spotify">
-        <iframe
-          [src]="
-            sanitizer.bypassSecurityTrustResourceUrl(
-              'https://open.spotify.com/embed/track/' + this.songId
-            )
-          "
-          id="please"
-          width="100%"
-          height="380"
-          frameborder="0"
-          allowtransparency="true"
-          allow="encrypted-media"
-        ></iframe>
-      </div>
-      <div>
-        <mat-icon
-          id="favourite"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="Favourite this track"
-          [hidden]="userData === undefined || this.songId === ''"
-          >{{ this.favourite ? 'favorite' : 'favorite_border' }}</mat-icon
-        >
+      <div class="spotify">
+        <div style="max-width: 500px;">
+          <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 100%; padding-top: 80px;">
+            <iframe
+              id="listen"
+              src=""
+              style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;"
+              allowfullscreen
+              scrolling="no"
+              allow="encrypted-media"
+            ></iframe>
+          </div>
+        </div>
+        <div>
+          <mat-icon
+            id="favourite"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="Favourite this track"
+            [hidden]="auth.currentUserDoc === undefined || songId === ''"
+            >{{ favourite ? 'favorite' : 'favorite_border' }}</mat-icon
+          >
+        </div>
       </div>
     </div>
   </div>

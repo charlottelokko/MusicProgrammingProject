@@ -13,27 +13,19 @@ export class NavbarComponent implements OnInit {
   searchStr: string;
   user: any;
 
-  constructor(
-    private _spotifyService: SpotifyService,
-    public auth: AuthService
-  ) {
-    this.auth.user.subscribe(_user => {
-      this.user = _user;
-    });
-    $(document).ready(() => {});
-  }
+  constructor(private spotifyService: SpotifyService, public auth: AuthService) {}
 
   ngOnInit() {}
 
   searchTracks() {
     console.log(this.searchStr);
     if (this.searchStr !== '') {
-      this._spotifyService.searchSpotify(this.searchStr).subscribe(
+      this.spotifyService.searchSpotify(this.searchStr).subscribe(
         res => {
           console.log((res as any).tracks.items);
           // console.log((res as any).tracks.items.length);
           // console.log((res as any).tracks.items[0].artists.length);
-          const trackAmount = (res as any).tracks.items.length;
+          // const trackAmount = (res as any).tracks.items.length;
           let artists;
           let track;
           let image;
@@ -78,12 +70,7 @@ export class NavbarComponent implements OnInit {
             // atag.innerHTML = (track + ' : ' + artists);
             atag.setAttribute(
               'href',
-              'main#' +
-                trackId +
-                '+' +
-                encodeURIComponent(track) +
-                '+' +
-                encodeURIComponent(artists)
+              'main#' + trackId + '+' + encodeURIComponent(track) + '+' + encodeURIComponent(artists)
             );
             atag.setAttribute('class', 'dropdown-item overflow');
             imageDiv.setAttribute('class', 'imageContainer');
@@ -105,10 +92,4 @@ export class NavbarComponent implements OnInit {
       element.innerHTML = ' ';
     }
   }
-  // searchLyrics(searchtr) {
-  //   console.log(this.searchStr);
-  //   if (this.searchStr !== '') {
-  //     this._geniusService.searchLyrics(this.searchStr);
-  //   }
-  // }
 }

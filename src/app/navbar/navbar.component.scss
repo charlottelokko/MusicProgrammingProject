@@ -1,18 +1,20 @@
-.searchy{
-    // text-align:center;
-    margin: 0 auto;
-    display: block;
-    width: 100%; 
+.searchy {
+  display: block;
+  width: 100%;
 
+// text-align:center;
+  margin: 0 auto;
 }
 
-.overflow{
-    overflow: hidden;
-    p{
-        background: teal;
-        width: 1px;
-        text-overflow: ellipsis;
-    }
+.overflow {
+  overflow: hidden;
+  p {
+    width: 1px;
+
+    text-overflow: ellipsis;
+
+    background: teal;
+  }
 }
 // form{
 //     .overflow {
@@ -23,18 +25,16 @@
 //     }
 // }
 
-.imageContainer{ 
-    widows: 50px; 
-    height: 50px; 
-    float:left;
+.imageContainer {
+  float: left;
+  height: 50px;
+
+  widows: 50px;
 }
 
-.roundbox
-{  
-  -moz-border-radius: 6px 6px 6px 6px;
-  -webkit-border-radius: 6px;  
+.roundbox {
   border-radius: 6px 6px 6px 6px;
 }
-.modal-title{
-    margin:0 auto;
+.modal-title {
+  margin: 0 auto;
 }

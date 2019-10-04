@@ -95,6 +95,7 @@ const appRoutes: Routes = [
     ),
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'listen-and-lyrics'),
+    AngularFireDatabaseModule,
     AngularFirestoreModule,
   ],
   providers: [],

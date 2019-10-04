@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { SpotifyService } from '../services/spotify.service';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument,
-} from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import firebase from 'firebase/app';
 import { User, PlayedTrack } from '../core/user-type';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-favourites',
@@ -18,54 +15,32 @@ export class FavouritesComponent implements OnInit {
   favouriteTracks: Array<PlayedTrack> = [];
   recommendations: Array<any>;
   searchStr: string;
-  userData: User;
-  constructor(
-    private afs: AngularFirestore,
-    private _spotifyService: SpotifyService,
-    public auth: AuthService
-  ) {
-    this.loadFavouriteTracks();
-    // reference to firestore collection
-    const dataDoc = this.afs.doc('SecretAccountData/' + 'SAD');
-    const data = dataDoc.valueChanges(); // Observable of Secret Data
-    data.subscribe(
-      _e => {},
-      err => {
-        console.log('Error:' + err);
-      }
-    );
-  }
-  loadFavouriteTracks() {
-    this.auth.user.subscribe(_user => {
-      // If the user is logged in
-      if (_user !== null) {
-        // stores the users data
-        this.userData = _user;
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-          `users/${this.userData.uid}`
-        );
-        this.favouriteTracks = this.userData.playedTracks.filter(track => {
-          return track.favourites.favourited;
+  constructor(private afs: AngularFirestore, private spotifyService: SpotifyService, public auth: AuthService) {
+    let searchRecommendations$: Subscription;
+    // If the user is logged in
+    if (this.auth.currentUserDoc !== null) {
+      this.favouriteTracks = this.auth.currentUserDoc.playedTracks.filter(track => {
+        return track.favourites.favourited;
+      });
+      searchRecommendations$ = this.spotifyService
+        .searchRecommendations(this.favouriteTracks)
+        .subscribe(recommendations => {
+          this.recommendations = (recommendations as any).tracks;
+          // console.log(
+          //   'Recommendations: ' +
+          //     this.recommendations.map(track =>
+          //       JSON.stringify((track as any).artists)
+          //     )
+          // );
         });
-        this._spotifyService
-          .searchRecomendations(this.favouriteTracks)
-          .subscribe(recommendations => {
-            this.recommendations = (recommendations as any).tracks;
-            // console.log(
-            //   'Recommendations: ' +
-            //     this.recommendations.map(track =>
-            //       JSON.stringify((track as any).artists)
-            //     )
-            // );
-          });
-      }
-      $('.track-info, .user-info').ready(() => {
+      $('.track-info, .user-info', () => {
         $('.track-info, .user-info').hide();
       });
-      $(document).ready(() => {
+      $(() => {
         ($('[data-toggle="tooltip"]') as any).tooltip();
-        $('.rating mat-icon').hover(
-          e => {
+        $('.rating mat-icon').on(
+          'hover',
+          (e: { currentTarget: any }) => {
             // console.log('hovered: ' + $(e.currentTarget).attr('id'));
             $(e.currentTarget).addClass('hover');
             $(e.currentTarget)
@@ -80,8 +55,13 @@ export class FavouritesComponent implements OnInit {
           }
         );
       });
-    });
+    } else {
+      if (searchRecommendations$) {
+        searchRecommendations$.unsubscribe();
+      }
+    }
   }
+
   updateRating(e: { currentTarget: any }) {
     const ratingEl = $(e.currentTarget)
       .attr('id')
@@ -89,52 +69,41 @@ export class FavouritesComponent implements OnInit {
     const track_id = ratingEl[2];
     const rating = parseInt(ratingEl[1], 10);
     console.log(ratingEl.toString());
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${this.userData.uid}`
-    );
-    this.userData.playedTracks.forEach((playedTrack, i) => {
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${this.auth.currentUserDoc.uid}`);
+    this.auth.currentUserDoc.playedTracks.forEach((playedTrack, i) => {
       if (playedTrack.id === track_id) {
-        this.userData.playedTracks[i].favourites.rating = rating;
+        this.auth.currentUserDoc.playedTracks[i].favourites.rating = rating;
       }
     });
     userRef
       .update({
-        playedTracks: this.userData.playedTracks,
+        playedTracks: this.auth.currentUserDoc.playedTracks,
       })
       .then(() => {
         this.switchToUserInfo(track_id);
       });
   }
-  setRating(id) {
+  setRating(id: string) {
     const index = this.favouriteTracks.findIndex(obj => obj.id === id);
     return this.favouriteTracks[index].favourites.rating;
   }
-  setFavourited(id) {
+  setFavourited(id: string) {
     const index = this.favouriteTracks.findIndex(obj => obj.id === id);
     const favourited = this.favouriteTracks[index].favourites.favourited;
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${this.userData.uid}`
-    );
     // removes the current favourited value of the specified track
-    userRef.update({
-      playedTracks: firebase.firestore.FieldValue.arrayRemove(
-        this.favouriteTracks[index]
-      ),
+    this.auth.userRef.update({
+      playedTracks: firebase.firestore.FieldValue.arrayRemove(this.favouriteTracks[index]),
     });
-    this.favouriteTracks[index].favourites.favourited = favourited
-      ? false
-      : true;
+    this.favouriteTracks[index].favourites.favourited = favourited ? false : true;
     // replaces the favourited value of this track with the new one
-    userRef.update({
-      playedTracks: firebase.firestore.FieldValue.arrayUnion(
-        this.favouriteTracks[index]
-      ),
+    this.auth.userRef.update({
+      playedTracks: firebase.firestore.FieldValue.arrayUnion(this.favouriteTracks[index]),
     });
   }
 
-  artists2String(artists) {
+  artists2String(artists: { forEach: (arg0: (artist: any, i: any) => void) => void }) {
     let result = '';
-    artists.forEach((artist, i) => {
+    artists.forEach((artist: { name: string }, i: number) => {
       if (i === 0) {
         result += artist.name;
       } else {
@@ -143,33 +112,27 @@ export class FavouritesComponent implements OnInit {
     });
     return result;
   }
-  switchToAlbumCover(id) {
+  switchToAlbumCover(id: string) {
     $('#' + id + '.track-info, #' + id + '.user-info').hide();
     $('#' + id + '.album-cover').show();
   }
-  switchToUserInfo(id) {
+  switchToUserInfo(id: string) {
     $('#' + id + '.track-info, #' + id + '.album-cover').hide();
     $('#' + id + '.user-info').show();
   }
-  switchToTrackInfo(id) {
+  switchToTrackInfo(id: string) {
     $('#' + id + '.user-info, #' + id + '.album-cover').hide();
     $('#' + id + '.track-info').show();
   }
-  playTrack(id, name, artists) {
-    window.location.href =
-      'main#' +
-      id +
-      '+' +
-      encodeURIComponent(name) +
-      '+' +
-      encodeURIComponent(artists);
+  playTrack(id: string, name: string | number | boolean, artists: string | number | boolean) {
+    window.location.href = 'main#' + id + '+' + encodeURIComponent(name) + '+' + encodeURIComponent(artists);
   }
-  millisToMinutesAndSeconds(millis) {
+  millisToMinutesAndSeconds(millis: number) {
     const seconds = Math.floor((millis / 1000) % 60);
     const minutes = Math.floor(millis / 60000);
     return minutes + ':' + (seconds < 10 ? '0' + seconds : seconds);
   }
-  strReplace(str) {
+  strReplace(str: { replace: (arg0: RegExp, arg1: string) => void }) {
     return str.replace(/,/g, ', ');
   }
   ngOnInit() {}
