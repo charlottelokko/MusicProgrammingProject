@@ -1,12 +1,12 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h3 class="display-3">Listen & Lyrics: It's all in the name</h3>
+    <h3 class="display-3">Listen & Lyrics: <span class="green light">It's all in the name</span></h3>
     <hr class="my-2" />
     <p class="lead">Wanna sing? Or read along to your favourite tracks!?</p>
-    <p>Search up at the top or look below!</p>
+    <p class="lead">Search up at the top or look below!</p>
   </div>
 </div>
-<h3 style="text-align: center">Spotify's Current Top 50 Global Charts!</h3>
+<h3 style="text-align: center">Spotify's Current Top 50 Global Chart</h3>
 <div class="row no-gutters">
   <div class="card mb-3" style="width: 20rem;" *ngFor="let album of albumsobj">
     <div>
@@ -18,9 +18,9 @@
       </div>
     </div>
     <div class="card-body">
-      <h5 class="card-title">Title: {{ album.track.name }}</h5>
-      <h5 class="card-title">Artist: {{ album.track.artists[0].name }}</h5>
-      <h5 class="card-title">Album: {{ album.track.album.name }}</h5>
+      <h5 class="card-title"><b class="green">Title: </b> {{ album.track.name }}</h5>
+      <h5 class="card-title"><b class="green">Artist: </b> {{ album.track.artists[0].name }}</h5>
+      <h5 class="card-title"><b class="green">Album: </b> {{ album.track.album.name }}</h5>
     </div>
   </div>
 </div>

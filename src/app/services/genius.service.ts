@@ -1,13 +1,8 @@
-// made this new file and copy-pasted your code over to here cause its 'service.ts'
 import { Injectable } from '@angular/core';
-// import { Http, Headers } from '@angular/Http';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-// Not needed anymore
-// import 'rxjs/add/operator/map'; // this was also changed in rxjs 6
-// import firebase firestore for angular
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable, Subscription } from 'rxjs';
-import * as $ from 'jquery';
+
 export interface Data {
   genius_access_token: string;
 }
@@ -75,8 +70,10 @@ export class GeniusService {
     const endIndex = html.indexOf('</div>', html.indexOf('</div>', startIndex)) + 7;
     let lyric = html.substring(startIndex, endIndex);
     // removing extra stuff
-    lyric = lyric.replace(/<a/g, '<p');
-    lyric = lyric.replace(/<\/a>/g, '</p>');
+    lyric = lyric.replace(/<a/g, '<p'); // replaces the opening a tags with opening p tags
+    lyric = lyric.replace(/<\/a>/g, '</p>'); // replaces the closing a tags with closing p tags
+    lyric = lyric.replace(/’/g, "'"); // removes the curly apostrophes
+
     // console.log(lyric);
     return lyric;
   }

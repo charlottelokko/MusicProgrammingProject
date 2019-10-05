@@ -29,7 +29,6 @@ export class AuthService {
       })
     );
     this.user$.subscribe(userData => {
-      console.log('Test:', userData);
       this.currentUserDoc = userData;
     });
   }

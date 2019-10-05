@@ -5,7 +5,6 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import firebase from 'firebase/app';
 import { User, PlayedTrack } from '../core/user-type';
 import { Subscription } from 'rxjs';
-
 @Component({
   selector: 'app-favourites',
   templateUrl: './favourites.component.html',
@@ -13,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class FavouritesComponent implements OnInit {
   favouriteTracks: Array<PlayedTrack> = [];
-  recommendations: Array<any>;
+  recommendations: Array<SpotifyApi.TrackObjectSimplified>;
   searchStr: string;
   constructor(private afs: AngularFirestore, private spotifyService: SpotifyService, public auth: AuthService) {
     let searchRecommendations$: Subscription;
@@ -24,8 +23,8 @@ export class FavouritesComponent implements OnInit {
       });
       searchRecommendations$ = this.spotifyService
         .searchRecommendations(this.favouriteTracks)
-        .subscribe(recommendations => {
-          this.recommendations = (recommendations as any).tracks;
+        .subscribe((recommendationsObj: SpotifyApi.RecommendationsObject) => {
+          this.recommendations = recommendationsObj.tracks;
           // console.log(
           //   'Recommendations: ' +
           //     this.recommendations.map(track =>

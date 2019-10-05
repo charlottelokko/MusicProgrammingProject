@@ -11,6 +11,7 @@ import { FavouritesComponent } from './favourites/favourites.component';
 import { MainComponent } from './main/main.component';
 import { AboutComponent } from './about/about.component';
 import { CoreModule } from './core/core.module';
+import { AuthGuard } from './guards/auth.guard';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -52,6 +53,7 @@ const appRoutes: Routes = [
   {
     path: 'favourites',
     component: FavouritesComponent,
+    canActivate: [AuthGuard],
     data: { title: 'Favourites' },
   },
   {
