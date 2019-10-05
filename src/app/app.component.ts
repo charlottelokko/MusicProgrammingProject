@@ -7,9 +7,8 @@ import { Component } from '@angular/core';
   providers: [],
 })
 export class AppComponent {
-  title = 'MusicProgrammingProject';
+  title = 'Listen & Lyrics';
   constructor() {
     $('#alertModal').modal();
-    console.log('toasted');
   }
 }

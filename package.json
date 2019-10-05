@@ -4,11 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build && firebase deploy"
+    "deploy": "npm build && firebase deploy"
   },
   "private": true,
   "dependencies": {
